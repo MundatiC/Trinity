@@ -107,9 +107,7 @@ async function registerUser(req, res) {
 
   async function logoutUser(req, res) {
     console.log(req.session)
-    const authorized = req.session?.authorized;
-    if (req.session && authorized) {
-        console.log( req.session.user)
+    
        
       req.session.destroy((err) => {
         if (err) {
@@ -117,10 +115,7 @@ async function registerUser(req, res) {
         } else {
           res.send("Logged out successfully");
         }
-      });
-    } else{
-        res.send("You are not logged in")
-    }
+      })
     
   }
 
