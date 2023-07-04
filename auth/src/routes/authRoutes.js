@@ -5,6 +5,8 @@ const authRouter = express.Router();
 
 const { registerUser, loginUser, logoutUser } = require("../controllers/authController");
 
+const { sessionAuthorization } = require("../middlewares/sessionAuthorization");
+
 
 
 
@@ -16,6 +18,6 @@ authRouter.post("/register", newUserMiddleware, registerUser)
 authRouter.post("/login", loginUser)
 
 
-authRouter.get("/logout", logoutUser)
+authRouter.get("/logout", sessionAuthorization, logoutUser)
 
 module.exports = authRouter;
