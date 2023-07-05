@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
 const  postRouter  = require("./src/routes/postRoutes");
+const followRouter = require("./src/routes/followRoutes");
 
 
 
@@ -36,7 +37,7 @@ app.get(
     }
 );
 
-app.use(postRouter)
+app.use(postRouter, followRouter)
 
 app.use("*", (req, res, next) => {
     const error = new Error("Route Not found");
