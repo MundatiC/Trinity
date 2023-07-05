@@ -17,8 +17,9 @@ app.use(cors())
 const oneDay = 1000 * 60 * 60 * 24
 app.use(session({
     secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: true,
+    resave: true,
+    saveUninitialized: false,
+    rolling: true,
     genid: ()=> v4(),
     cookie:{
         maxAge: oneDay,

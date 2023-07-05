@@ -4,6 +4,9 @@ const bcrypt = require('bcrypt');
 require('dotenv').config();
 const createMarkup = require("../utils/createMarkup");
 
+
+const uploadProfile = require("../utils/upload");
+
 const sendMail = require("../utils/sendMail");
 const getAUser = require("../utils/getAUser"); 
 
@@ -17,6 +20,9 @@ async function registerUser(req, res) {
       let { value } = req;
   
       let hashed_pwd = await bcrypt.hash(user.Password, 8);
+      let profilePicture = await uploadProfile(value.ProfilePicture);
+      console.log(profilePicture)
+      console.log('hey')
   
       let sql = await mssql.connect(config);
   
@@ -24,7 +30,7 @@ async function registerUser(req, res) {
         let results = await sql
           .request()
           .input("Username", value.Username)
-          .input("ProfilePicture", value.ProfilePicture)
+          .input("ProfilePicture", profilePicture)
           .input("Password", hashed_pwd)
           .input("Email", value.Email)
           .execute("AddUser");
@@ -71,6 +77,7 @@ async function registerUser(req, res) {
     console.log(req.body)
     try {
       let user = await getAUser(Username);
+      console.log(`${user} hey`)
       
   
       if (user) {
@@ -118,6 +125,8 @@ async function registerUser(req, res) {
       })
     
   }
+
+
 
   module.exports = {
     registerUser,
