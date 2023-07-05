@@ -2,8 +2,9 @@ function sessionAuthorization(req, res, next) {
     const authorized = req.session?.authorized;
   
     if (req.session && authorized) {
+      console.log(req.session)
       // Session is valid and authorized
-      console.log(req.session.user);
+      
       next(); // Proceed to the next middleware or route handler
     } else {
       // Session is invalid or unauthorized
