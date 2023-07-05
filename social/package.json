@@ -9,6 +9,7 @@
   "author": "MundatiC",
   "license": "ISC",
   "dependencies": {
+    "cloudinary": "^1.37.3",
     "cors": "^2.8.5",
     "mssql": "^9.1.1"
   }
