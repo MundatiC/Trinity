@@ -4,13 +4,14 @@ const config = require("../config/config");
 
 async function getFeed(req, res) {
     console.log(req.session?.user.UserId)
+    const UserId = req.session?.user.UserId
     try {
          let sql = await mssql.connect(config)
 
          if(sql.connected){
             const request = sql.request();
             
-            request.input('SpecificUserId', 71)
+            request.input('SpecificUserId', UserId)
 
             let result = await request.execute('GetPostsFromFollowedUsers');
             console.log(result)
@@ -29,13 +30,14 @@ async function getFeed(req, res) {
 }
 
 async function getUserPosts(req, res) {
+    const UserId = req.session?.user.UserId
     try {
         let sql = await mssql.connect(config)
 
         if(sql.connected){
            const request = sql.request();
            
-           request.input('SpecificUserId', 70)
+           request.input('SpecificUserId', UserId)
 
            let result = await request.execute('GetPostsFromSpecific');
            console.log(result)

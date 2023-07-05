@@ -10,7 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "cloudinary": "^1.37.3",
+    "connect-redis": "^7.1.0",
     "cors": "^2.8.5",
-    "mssql": "^9.1.1"
+    "mssql": "^9.1.1",
+    "redis": "^4.6.7"
   }
 }
