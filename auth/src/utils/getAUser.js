@@ -1,11 +1,11 @@
 const mssql = require('mssql');
 const config = require('../config/config')
 
-async function getAUser(Username) {
+async function getAUser(Username, pool) {
 
-    let sql = await mssql.connect(config)
-    if (sql.connected) {
-        let results = await sql.request()
+    
+    if (pool.connected) {
+        let results = await pool.request()
             .input("Username", Username)
             .execute("GetUserByUsername")
         let user = results.recordset[0]

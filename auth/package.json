@@ -12,6 +12,7 @@
   "dependencies": {
     "bcrypt": "^5.1.0",
     "cloudinary": "^1.37.3",
+    "connect-redis": "^7.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
@@ -20,6 +21,7 @@
     "express-session": "^1.17.3",
     "joi": "^17.9.2",
     "mssql": "^9.1.1",
+    "redis": "^4.6.7",
     "uuid": "^9.0.0",
     "view": "^1.1.1"
   }

@@ -24,10 +24,10 @@ async function registerUser(req, res) {
       console.log(profilePicture)
       console.log('hey')
   
-      let sql = await mssql.connect(config);
+     const { pool } = req;
   
-      if (sql.connected) {
-        let results = await sql
+      if (pool.connected) {
+        let results = await pool
           .request()
           .input("Username", value.Username)
           .input("ProfilePicture", profilePicture)
@@ -44,7 +44,7 @@ async function registerUser(req, res) {
         if (results.rowsAffected[0] > 0) {
           // templating
           let html = await createMarkup("./src/views/signup.ejs", {
-            name: value.Name,
+            name: value.Username,
             text: "We are thrilled to have you as a new member of our community. This email serves as a warm introduction and a guide to help you get started on our platform.",
           });
           const message = {
@@ -74,9 +74,10 @@ async function registerUser(req, res) {
 
   async function loginUser(req, res) {
     let { Username, Password } = req.body;
+    const { pool } = req;
     console.log(req.body)
     try {
-      let user = await getAUser(Username);
+      let user = await getAUser(Username, pool);
       console.log(`${user} hey`)
       
   
