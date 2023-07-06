@@ -116,4 +116,32 @@ async function unfollowUser(req, res) {
 
 }
 
-module.exports = {getFollowing, getFollowers, followUser, unfollowUser};
+async function getUsersNotFollowed (req, res){
+    const UserId = req.session?.user.UserId
+    try {
+        let sql = await mssql.connect(config)
+
+        if(sql.connected){
+           const request = sql.request();
+           
+           request.input('UserId', UserId)
+
+           let result = await request.execute('GetUsersNotFollowedByUser');
+           console.log(result)
+
+           res.json({
+               success: true,
+               message: "Retrieved users that you can follow",
+               data: result.recordset
+           })
+        }
+   } catch (error) {
+       res.send(error.message)
+       
+   }
+
+
+
+}
+
+module.exports = {getFollowing, getFollowers, followUser, unfollowUser, getUsersNotFollowed};
