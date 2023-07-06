@@ -5,11 +5,13 @@ const upload = require('../utills/upload');
 async function getFeed(req, res) {
     console.log(req.session?.user.UserId)
     const UserId = req.session?.user.UserId
-    try {
-        let sql = await mssql.connect(config)
 
-        if (sql.connected) {
-            const request = sql.request();
+    const { pool } = req
+    try {
+        
+
+        if (pool.connected) {
+            const request = pool.request();
 
             request.input('SpecificUserId', UserId)
 
@@ -31,11 +33,12 @@ async function getFeed(req, res) {
 
 async function getUserPosts(req, res) {
     const UserId = req.session?.user.UserId
+    const { pool } = req
     try {
-        let sql = await mssql.connect(config)
+      
 
-        if (sql.connected) {
-            const request = sql.request();
+        if (pool.connected) {
+            const request = pool.request();
 
             request.input('SpecificUserId', UserId)
 
@@ -61,9 +64,11 @@ async function createPost(req, res) {
     const UserId = req.session?.user.UserId
     const { Content, ImageUrls, VideoUrls } = req.body;
 
+    const { pool } = req
+
     try {
-        let sql = await mssql.connect(config);
-        if (sql.connected) {
+       
+        if (pool.connected) {
 
             let uploadedImageUrls = [];
             if (ImageUrls) {
@@ -89,7 +94,7 @@ async function createPost(req, res) {
             }
 
 
-            const request = sql.request();
+            const request = pool.request();
 
             
 
@@ -101,10 +106,14 @@ async function createPost(req, res) {
 
                 let result = await request.execute('AddPost');    
                 
-
-            res.json({
-                data: result
-            })
+            if(result.rowsAffected[0] > 0){
+                res.json({
+                    success: true,
+                    message: "Post created successfully"
+                    
+                })
+            }
+            
 
         }
 
@@ -114,7 +123,114 @@ async function createPost(req, res) {
     }
 }
 
+async function getPost(req, res) {
+    const  PostId  = req.params.id;
+    console.log(PostId)
+    const { pool } = req
+    try {
+       
+        if (pool.connected) {
+            const request = pool.request();
+            request.input('PostId', PostId);
+            const result = await request.execute('GetPostWithComments');
+            console.log(result)
+            res.json({
+               success: true,
+                message: "Retrieved post with comments",
+                data: result.recordset
+            })
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
+
+async function likePost(req, res) {
+    const UserId = req.session?.user.UserId
+    const { PostId } = req.body;
+    const { pool } = req
+
+    try {
+        
+        if (pool.connected) {
+            const request = pool.request();
+            request.input('UserId', UserId)
+                .input('PostId', PostId)
+            const result = await request.execute('LikePost');
+            console.log(result)
+            console.log(result.recordset[0].Response)
+            if(result.recordset[0].Response === 'Liked'){
+                res.json({
+                    success: true,
+                    message: "Post liked successfully"
+                })
+            }else{
+                res.json({
+                    success: true,
+                    message: "Post unliked successfully"
+                })
+            }
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
+
+async function commentOnPost(req, res) {
+    const UserId = req.session?.user.UserId
+    const { PostId, Content } = req.body;
+    const { pool } = req
+
+    try {
+       
+        if (pool.connected) {
+            const request = pool.request();
+            request.input('UserId', UserId)
+                .input('PostId', PostId)
+                .input('Content', Content)
+            const result = await request.execute('AddComment');
+            console.log(result)
+            res.json({
+                success: true,
+                message: "Commented on post successfully"
+            })
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+
+}
+
+async function replytoComment (req, res) {
+    const UserId = req.session?.user.UserId
+    const { PostId,CommentId, Content } = req.body;
+    const { pool } = req
+
+    try {
+        
+        if (pool.connected) {
+            const request = pool.request();
+            request.input('PostId', PostId)
+                .input('UserId', UserId)
+                .input('ParentCommentId', CommentId)
+                .input('Content', Content)
+            const result = await request.execute('AddComment');
+            console.log(result)
+            res.json({
+                success: true,
+                message: "Replied to comment successfully"
+            })
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+
+}
 
 
 
-module.exports = { getFeed, getUserPosts, createPost };
+module.exports = { getFeed, getUserPosts, createPost, getPost, likePost, commentOnPost, replytoComment };

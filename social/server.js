@@ -3,9 +3,8 @@ require("dotenv").config();
 const cors = require("cors");
 const  postRouter  = require("./src/routes/postRoutes");
 const followRouter = require("./src/routes/followRoutes");
-
-const { createClient } = require("redis");
-const RedisStore = require("connect-redis").default;
+const sql = require("mssql");
+const config = require("./src/config/config");
 
 
 
@@ -23,7 +22,10 @@ app.use(cors())
 async function startSocial(){
     try {
         
-      
+      const pool = await sql.connect(config)
+    console.log("Connected to the database")
+
+    app.use((req, res, next) => {req.pool = pool; next()})
       
       app.get(
         "/", 
