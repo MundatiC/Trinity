@@ -87,6 +87,9 @@ async function registerUser(req, res) {
             console.log("Hey")
             req.session.authorized = true;
             req.session.user = user;
+            
+            
+            
       
   
           res.json({

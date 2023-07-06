@@ -3,12 +3,13 @@ const  config  = require("../config/config");
 
 async function getFollowing(req, res) {
     const UserId = req.session?.user.UserId
+    const {pool} = req
 
     try {
-        let sql = await mssql.connect(config)
+        
 
-        if(sql.connected){
-           const request = sql.request();
+        if(pool.connected){
+           const request = pool.request();
            
            request.input('UserId', UserId)
 
@@ -31,11 +32,13 @@ async function getFollowing(req, res) {
 
 async function getFollowers(req, res) {
     const UserId = req.session?.user.UserId
-    try {
-        let sql = await mssql.connect(config)
 
-        if(sql.connected){
-           const request = sql.request();
+    const {pool} = req
+    try {
+       
+
+        if(pool.connected){
+           const request = pool.request();
            
            request.input('UserId', UserId)
 
@@ -58,12 +61,13 @@ async function getFollowers(req, res) {
 async function followUser(req, res) {
     const UserId = req.session?.user.UserId
     const { FollowerUserId } = req.body
+    const {pool} = req
 
     try {
-        let sql = await mssql.connect(config)
+        
 
-        if(sql.connected){
-           const request = sql.request();
+        if(pool.connected){
+           const request = pool.request();
            
            request.input('UserId', UserId)
            request.input('FollowerUserId', FollowerUserId)
@@ -89,12 +93,13 @@ async function followUser(req, res) {
 async function unfollowUser(req, res) {
     const UserId = req.session?.user.UserId
     const { FollowerUserId } = req.body
+    const {pool} = req
 
     try {
-        let sql = await mssql.connect(config)
+        
 
-        if(sql.connected){
-           const request = sql.request();
+        if(pool.connected){
+           const request = pool.request();
            
            request.input('UserId', UserId)
            request.input('FollowerUserId', FollowerUserId)
@@ -118,11 +123,12 @@ async function unfollowUser(req, res) {
 
 async function getUsersNotFollowed (req, res){
     const UserId = req.session?.user.UserId
+    const {pool} = req
     try {
-        let sql = await mssql.connect(config)
+    
 
-        if(sql.connected){
-           const request = sql.request();
+        if(pool.connected){
+           const request = pool.request();
            
            request.input('UserId', UserId)
 
