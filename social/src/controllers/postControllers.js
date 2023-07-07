@@ -119,7 +119,7 @@ async function createPost(req, res) {
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ error: error.message });
     }
 }
 
@@ -132,7 +132,32 @@ async function getPost(req, res) {
         if (pool.connected) {
             const request = pool.request();
             request.input('PostId', PostId);
-            const result = await request.execute('GetPostWithComments');
+            const result = await request.execute('GetPost');
+            const comments = await request.execute('GetCommentsByPostId');
+            console.log(result)
+            res.json({
+               success: true,
+                message: "Retrieved specific post",
+                data: result.recordset,
+                comments: comments.recordset
+            })
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+}
+
+async function getPostComments(req, res) {
+    const  PostId  = req.params.id;
+    console.log(PostId)
+    const { pool } = req
+    try {
+       
+        if (pool.connected) {
+            const request = pool.request();
+            request.input('PostId', PostId);
+            const result = await request.execute('GetCommentsByPostId');
             console.log(result)
             res.json({
                success: true,
@@ -142,7 +167,7 @@ async function getPost(req, res) {
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ error: error.message });
     }
 }
 
@@ -199,25 +224,24 @@ async function commentOnPost(req, res) {
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ error: error.message });
     }
 
 }
 
 async function replytoComment (req, res) {
     const UserId = req.session?.user.UserId
-    const { PostId,CommentId, Content } = req.body;
+    const { CommentId, Content } = req.body;
     const { pool } = req
 
     try {
         
         if (pool.connected) {
             const request = pool.request();
-            request.input('PostId', PostId)
+            request.input('CommentId', CommentId)
                 .input('UserId', UserId)
-                .input('ParentCommentId', CommentId)
                 .input('Content', Content)
-            const result = await request.execute('AddComment');
+            const result = await request.execute('AddReply');
             console.log(result)
             res.json({
                 success: true,
@@ -226,11 +250,11 @@ async function replytoComment (req, res) {
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ error: error.message });
     }
 
 }
 
 
 
-module.exports = { getFeed, getUserPosts, createPost, getPost, likePost, commentOnPost, replytoComment };
+module.exports = { getFeed, getUserPosts, createPost, getPost, likePost, commentOnPost, replytoComment, getPostComments };
