@@ -148,27 +148,32 @@ async function getPost(req, res) {
     }
 }
 
-async function getPostComments(req, res) {
-    const  PostId  = req.params.id;
-    console.log(PostId)
+
+
+async function deletePost(req,res){
+    const UserId = req.session?.user.UserId
+    const{ PostId }   = req.body;
+    
     const { pool } = req
     try {
        
         if (pool.connected) {
             const request = pool.request();
-            request.input('PostId', PostId);
-            const result = await request.execute('GetCommentsByPostId');
+            request.input('PostId', PostId)
+                    .input('UserId',UserId);
+            const result = await request.execute('DeletePost');
             console.log(result)
             res.json({
                success: true,
-                message: "Retrieved post with comments",
-                data: result.recordset
+                message: "Deleted post successfully",
+                data: result.recordset,
             })
         }
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: error.message });
     }
+
 }
 
 async function likePost(req, res) {
@@ -257,4 +262,4 @@ async function replytoComment (req, res) {
 
 
 
-module.exports = { getFeed, getUserPosts, createPost, getPost, likePost, commentOnPost, replytoComment, getPostComments };
+module.exports = { getFeed, getUserPosts, createPost, getPost,deletePost, likePost, commentOnPost, replytoComment };
