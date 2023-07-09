@@ -4,6 +4,8 @@ const cors = require("cors");
 const sql = require("mssql");
 const config = require("./src/config/config");
 
+const profileRouter = require("./src/routes/profileRoutes")
+
 
 
 
@@ -45,7 +47,7 @@ async function startProfile(){
     );
     
 
-    
+    app.use(profileRouter)
     app.use("*", (req, res, next) => {
         const error = new Error("Route Not found");
         next({

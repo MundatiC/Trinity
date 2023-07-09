@@ -4,19 +4,11 @@ require('dotenv').config();
 
 cloudinary.config(cloudinaryConfig);
 
-async function upload(path, type) {
+async function upload(path) {
   try {
-    let uploadResult;
-    if (type === 'image') {
-      uploadResult = await cloudinary.uploader.upload(path, { resource_type: 'image' });
-    } else if (type === 'video') {
-      uploadResult = await cloudinary.uploader.upload(path, { resource_type: 'video' });
-    } else {
-      throw new Error('Invalid media type');
-    }
-
-    console.log(uploadResult.secure_url);
-    return uploadResult.secure_url;
+    const result = await cloudinary.uploader.upload(path);
+    console.log(result.secure_url);
+    return result.secure_url;
   } catch (error) {
     console.error(error);
     throw error;
@@ -24,3 +16,5 @@ async function upload(path, type) {
 }
 
 module.exports = upload;
+
+
