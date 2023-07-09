@@ -11,15 +11,15 @@ const { sessionAuthorization } = require("../middlewares/sessionAuthorization");
 
 
 const newUserMiddleware = require("../middlewares/newUserMiddleware");
-const { auth } = require("../config/emailConfig");
+
 authRouter.post("/register", newUserMiddleware, registerUser)
 
 
 
 authRouter.post("/login", loginUser)
 
-
-authRouter.get("/logout", sessionAuthorization, logoutUser)
+authRouter.use(sessionAuthorization)
+authRouter.post("/logout", logoutUser)
 
 
 

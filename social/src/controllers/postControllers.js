@@ -119,7 +119,7 @@ async function createPost(req, res) {
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ error: error.message });
     }
 }
 
@@ -132,18 +132,48 @@ async function getPost(req, res) {
         if (pool.connected) {
             const request = pool.request();
             request.input('PostId', PostId);
-            const result = await request.execute('GetPostWithComments');
+            const result = await request.execute('GetPost');
+            const comments = await request.execute('GetCommentsByPostId');
             console.log(result)
             res.json({
                success: true,
-                message: "Retrieved post with comments",
-                data: result.recordset
+                message: "Retrieved specific post",
+                data: result.recordset,
+                comments: comments.recordset
             })
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ error: error.message });
     }
+}
+
+
+
+async function deletePost(req,res){
+    const UserId = req.session?.user.UserId
+    const{ PostId }   = req.body;
+    
+    const { pool } = req
+    try {
+       
+        if (pool.connected) {
+            const request = pool.request();
+            request.input('PostId', PostId)
+                    .input('UserId',UserId);
+            const result = await request.execute('DeletePost');
+            console.log(result)
+            res.json({
+               success: true,
+                message: "Deleted post successfully",
+                data: result.recordset,
+            })
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+
 }
 
 async function likePost(req, res) {
@@ -199,25 +229,24 @@ async function commentOnPost(req, res) {
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ error: error.message });
     }
 
 }
 
 async function replytoComment (req, res) {
     const UserId = req.session?.user.UserId
-    const { PostId,CommentId, Content } = req.body;
+    const { CommentId, Content } = req.body;
     const { pool } = req
 
     try {
         
         if (pool.connected) {
             const request = pool.request();
-            request.input('PostId', PostId)
+            request.input('CommentId', CommentId)
                 .input('UserId', UserId)
-                .input('ParentCommentId', CommentId)
                 .input('Content', Content)
-            const result = await request.execute('AddComment');
+            const result = await request.execute('AddReply');
             console.log(result)
             res.json({
                 success: true,
@@ -226,11 +255,11 @@ async function replytoComment (req, res) {
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ error: error.message });
     }
 
 }
 
 
 
-module.exports = { getFeed, getUserPosts, createPost, getPost, likePost, commentOnPost, replytoComment };
+module.exports = { getFeed, getUserPosts, createPost, getPost,deletePost, likePost, commentOnPost, replytoComment };

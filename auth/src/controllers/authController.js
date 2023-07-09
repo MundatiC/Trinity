@@ -75,32 +75,34 @@ async function registerUser(req, res) {
   async function loginUser(req, res) {
     let { Username, Password } = req.body;
     const { pool } = req;
-    console.log(req.body)
+    console.log(req.body);
     try {
       let user = await getAUser(Username, pool);
-      console.log(`${user} hey`)
-      
+      console.log(`${user} hey`);
   
       if (user) {
-        let passwords_match = await bcrypt.compare(Password, user.Password);
-        if (passwords_match) {
-            console.log("Hey")
-            req.session.authorized = true;
-            req.session.user = user;
-            
-            
-            
-      
-  
-          res.json({
-            success: true,
-            message: "log in successful",
-          });
-        } else {
+        if (user.IsDeleted) {
           res.status(401).json({
             success: false,
-            message: "wrong credentials",
+            message: "Your account has been deleted. Please contact support for assistance.",
           });
+        } else {
+          let passwords_match = await bcrypt.compare(Password, user.Password);
+          if (passwords_match) {
+            console.log("Hey");
+            req.session.authorized = true;
+            req.session.user = user;
+  
+            res.json({
+              success: true,
+              message: "log in successful",
+            });
+          } else {
+            res.status(401).json({
+              success: false,
+              message: "wrong credentials",
+            });
+          }
         }
       } else {
         res.status(404).json({
@@ -112,6 +114,7 @@ async function registerUser(req, res) {
       res.send(error.message);
     }
   }
+  
 
   async function logoutUser(req, res) {
     console.log(req.session)
