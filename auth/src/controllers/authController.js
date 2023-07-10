@@ -130,10 +130,46 @@ async function registerUser(req, res) {
     
   }
 
+  async function deleteAccount(req, res) {
+    const UserId = req.session?.user.UserId;
+    const { pool } = req;
+    const { Password } = req.body;
+  
+    try {
+      if (pool.connected) {
+        let passwords_match = await bcrypt.compare(
+          Password,
+          req.session?.user.Password
+        );
+        if (passwords_match) {
+          const request = pool.request();
+          request.input('UserId', UserId);
+  
+          let result = await request.execute('DeleteAccount');
+          console.log(result);
+  
+          if (result.rowsAffected[0] > 0) {
+            req.session.destroy()
+  
+            res.json({
+              success: true,
+              message: 'Successfully deleted your account',
+            });
+          }
+        } else {
+          res.status(401).send('wrong password');
+        }
+      }
+    } catch (error) {
+      res.send(error.message);
+    }
+  }
+
 
 
   module.exports = {
     registerUser,
     loginUser,
-    logoutUser
+    logoutUser,
+    deleteAccount
   }

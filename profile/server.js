@@ -5,6 +5,7 @@ const sql = require("mssql");
 const config = require("./src/config/config");
 
 const profileRouter = require("./src/routes/profileRoutes")
+const notificationRouter = require("./src/routes/notificationRoutes")
 
 
 
@@ -47,7 +48,7 @@ async function startProfile(){
     );
     
 
-    app.use(profileRouter)
+    app.use(profileRouter, notificationRouter)
     app.use("*", (req, res, next) => {
         const error = new Error("Route Not found");
         next({
