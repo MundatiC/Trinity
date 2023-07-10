@@ -3,7 +3,7 @@ const express = require("express");
 const authRouter = express.Router();
 
 
-const { registerUser, loginUser, logoutUser, upload } = require("../controllers/authController");
+const { registerUser, loginUser, logoutUser, deleteAccount } = require("../controllers/authController");
 
 const { sessionAuthorization } = require("../middlewares/sessionAuthorization");
 
@@ -20,6 +20,8 @@ authRouter.post("/login", loginUser)
 
 authRouter.use(sessionAuthorization)
 authRouter.post("/logout", logoutUser)
+
+authRouter.post("/deleteAccount", deleteAccount)
 
 
 

@@ -82,37 +82,32 @@ async function showProfile(req,res){
 }
 
 
-
-
-
-async function deleteAccount(req, res) {
-  const UserId = req.session?.user.UserId;
+async function changePassword(req, res){
+    const UserId = req.session?.user.UserId;
   const { pool } = req;
-  const { Password } = req.body;
+  const { currentPassword, newPassword } = req.body;
 
   try {
     if (pool.connected) {
       let passwords_match = await bcrypt.compare(
-        Password,
+        currentPassword,
         req.session?.user.Password
       );
+
+      let newPassword_hashed =  await bcrypt.hash(newPassword, 8);
       if (passwords_match) {
         const request = pool.request();
-        request.input('UserId', UserId);
+        request.input('UserId', UserId)
+                .input('NewPassword', newPassword_hashed)
 
-        let result = await request.execute('DeleteAccount');
+        let result = await request.execute('ChangePassword');
         console.log(result);
 
-        if (result.rowsAffected[0] > 0) {
-        //   Call the logout endpoint using axios
-          await axios.post('http://localhost:5050/logout');
-
-          
-          
+        if (result.rowsAffected[0] > 0) {          
 
           res.json({
             success: true,
-            message: 'Successfully deleted your account',
+            message: 'Successfully changed your password',
           });
         }
       } else {
@@ -122,9 +117,16 @@ async function deleteAccount(req, res) {
   } catch (error) {
     res.send(error.message);
   }
+
 }
+
+
+
+
+
+
 
 
   
 
-module.exports = {editProfile, showProfile,deleteAccount}
+module.exports = {editProfile, showProfile,changePassword}

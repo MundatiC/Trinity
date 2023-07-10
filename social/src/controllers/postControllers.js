@@ -204,7 +204,7 @@ async function likePost(req, res) {
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({  error: error.message });
     }
 }
 
@@ -260,6 +260,93 @@ async function replytoComment (req, res) {
 
 }
 
+async function getRepliesForComment(req,res){
+   
+    const { CommentId } = req.body;
+    const { pool } = req
+
+    try {
+        
+        if (pool.connected) {
+            const request = pool.request();
+            request
+                .input('CommentId', CommentId)
+            const result = await request.execute('GetRepliesByCommentId');
+            console.log(result)
+          
+           
+                res.json({
+                    success: true,
+                    message: "Retrieved replies successfully",
+                    data: result.recordset
+                })
+           
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({  error: error.message });
+        }
+
+}
+
+async function likeComment(req, res){
+    const UserId = req.session?.user.UserId
+    const { CommentId } = req.body;
+    const { pool } = req
+
+    try {
+        
+        if (pool.connected) {
+            const request = pool.request();
+            request.input('UserId', UserId)
+                .input('CommentId', CommentId)
+            const result = await request.execute('LikeComment');
+            console.log(result)
+            console.log(result.recordset[0].Response)
+            if(result.recordset[0].Response === 'Liked'){
+                res.json({
+                    success: true,
+                    message: "Comment liked successfully"
+                })
+            }else{
+                res.json({
+                    success: true,
+                    message: "Comment unliked successfully"
+                })
+            }
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({  error: error.message });
+    }
+
+}
+
+async function searchByUsername(req,res){
+    
+    const { username } = req.body;
+    const { pool } = req
+
+    try {
+        
+        if (pool.connected) {
+            const request = pool.request();
+            request.input('username', username);
+            const result = await request.execute('SearchUsersByUsername');
+            console.log(result)
+            res.json({
+                success: true,
+                message: "Searched users successfully",
+                data: result.recordset
+            })
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+
+}
 
 
-module.exports = { getFeed, getUserPosts, createPost, getPost,deletePost, likePost, commentOnPost, replytoComment };
+
+module.exports = { getFeed, getUserPosts, createPost, getPost,deletePost, likePost, commentOnPost,getRepliesForComment, likeComment, replytoComment, searchByUsername };
