@@ -20,9 +20,6 @@ async function registerUser(req, res) {
       let { value } = req;
   
       let hashed_pwd = await bcrypt.hash(user.Password, 8);
-      let profilePicture = await uploadProfile(value.ProfilePicture);
-      console.log(profilePicture)
-      console.log('hey')
   
      const { pool } = req;
   
@@ -30,7 +27,7 @@ async function registerUser(req, res) {
         let results = await pool
           .request()
           .input("Username", value.Username)
-          .input("ProfilePicture", profilePicture)
+          .input("ProfilePicture", value.ProfilePicture)
           .input("Password", hashed_pwd)
           .input("Email", value.Email)
           .execute("AddUser");
