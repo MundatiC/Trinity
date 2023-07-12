@@ -1,5 +1,5 @@
 import './App.css';
-import  Feed  from './components/Feed'
+import  Home  from './components/Home'
 import  Login  from './components/Login'
 import  Signup  from './components/Signup'
 import UploadWidget from './components/UploadWidget';
@@ -15,7 +15,7 @@ const myRouter = createBrowserRouter(
   createRoutesFromElements(
     <Route>
    
-    <Route path="/feed" element={<Feed />} />,
+    <Route path="/feed" element={<Home />} />,
     <Route path="/signup" element={<Signup />} />
     <Route path='/upload' element={<UploadWidget/>}/>
     <Route path="/" element={<Login />} />
