@@ -15,7 +15,7 @@ const myRouter = createBrowserRouter(
   createRoutesFromElements(
     <Route>
    
-    <Route path="/feed" element={<Home />} />,
+    <Route path="/home" element={<Home />} />
     <Route path="/signup" element={<Signup />} />
     <Route path='/upload' element={<UploadWidget/>}/>
     <Route path="/" element={<Login />} />

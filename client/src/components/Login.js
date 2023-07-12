@@ -25,12 +25,11 @@ export const Login = () => {
         "http://localhost:5050/login",
         loginData
       );
-      const token = response.data.token;
-      localStorage.setItem("token", token);
+      console.log(response.data)
 
       // Handle successful login response here
 
-      navigate("/feed");
+      navigate("/home");
     } catch (error) {
       if (error.response) {
         console.error("Server Error:", error.response.data);

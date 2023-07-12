@@ -15,7 +15,7 @@ const data =  [
         "ProfilePicture": "https://res.cloudinary.com/trinity-social/image/upload/v1688916649/y6q3qjenboawshlpmmwb.jpg",
         "LikeCount": 0,
         "CommentCount": 0,
-        "ImageUrls": ["https://res.cloudinary.com/trinity-social/image/upload/v1688636280/tpii9dqwed9hkds8tnwr.jpg","https://res.cloudinary.com/trinity-social/image/upload/v1688636279/bymyaj1b9uvzai65hdje.jpg"],
+        "ImageUrls": "https://res.cloudinary.com/trinity-social/image/upload/v1688636280/tpii9dqwed9hkds8tnwr.jpg",
         "VideoUrls": "https://res.cloudinary.com/trinity-social/video/upload/v1688636285/gjvryfpz61q4l5tx4equ.mp4"
     },
     {
@@ -27,8 +27,8 @@ const data =  [
         "ProfilePicture": "https://res.cloudinary.com/trinity-social/image/upload/v1688916649/y6q3qjenboawshlpmmwb.jpg",
         "LikeCount": 1,
         "CommentCount": 0,
-        "ImageUrls": ["https://res.cloudinary.com/trinity-social/image/upload/v1688636280/tpii9dqwed9hkds8tnwr.jpg","https://res.cloudinary.com/trinity-social/image/upload/v1688636279/bymyaj1b9uvzai65hdje.jpg"],
-        "VideoUrls": "https://res.cloudinary.com/trinity-social/video/upload/v1688636285/gjvryfpz61q4l5tx4equ.mp4"
+        "ImageUrls": "",
+        "VideoUrls": ""
     },
     {
         "PostId": 14,
@@ -39,7 +39,7 @@ const data =  [
         "ProfilePicture": "https://res.cloudinary.com/trinity-social/image/upload/v1688916649/y6q3qjenboawshlpmmwb.jpg",
         "LikeCount": 0,
         "CommentCount": 0,
-        "ImageUrls": ["https://res.cloudinary.com/trinity-social/image/upload/v1688636280/tpii9dqwed9hkds8tnwr.jpg","https://res.cloudinary.com/trinity-social/image/upload/v1688636279/bymyaj1b9uvzai65hdje.jpg"],
+        "ImageUrls": "https://res.cloudinary.com/trinity-social/image/upload/v1688636280/tpii9dqwed9hkds8tnwr.jpg,https://res.cloudinary.com/trinity-social/image/upload/v1688636279/bymyaj1b9uvzai65hdje.jpg",
         "VideoUrls": "https://res.cloudinary.com/trinity-social/video/upload/v1688636285/gjvryfpz61q4l5tx4equ.mp4"
     },
     {
@@ -51,7 +51,7 @@ const data =  [
         "ProfilePicture": "https://res.cloudinary.com/trinity-social/image/upload/v1688916649/y6q3qjenboawshlpmmwb.jpg",
         "LikeCount": 0,
         "CommentCount": 0,
-        "ImageUrls": ["https://res.cloudinary.com/trinity-social/image/upload/v1688636280/tpii9dqwed9hkds8tnwr.jpg","https://res.cloudinary.com/trinity-social/image/upload/v1688636279/bymyaj1b9uvzai65hdje.jpg"],
+        "ImageUrls": "https://res.cloudinary.com/trinity-social/image/upload/v1688636280/tpii9dqwed9hkds8tnwr.jpg,https://res.cloudinary.com/trinity-social/image/upload/v1688636279/bymyaj1b9uvzai65hdje.jpg",
         "VideoUrls": "https://res.cloudinary.com/trinity-social/video/upload/v1688636285/gjvryfpz61q4l5tx4equ.mp4"
     },
     {
@@ -63,7 +63,7 @@ const data =  [
         "ProfilePicture": "profile.jpg",
         "LikeCount": 0,
         "CommentCount": 0,
-        "ImageUrls": ["https://res.cloudinary.com/trinity-social/image/upload/v1688636280/tpii9dqwed9hkds8tnwr.jpg","https://res.cloudinary.com/trinity-social/image/upload/v1688636279/bymyaj1b9uvzai65hdje.jpg"],
+        "ImageUrls": "https://res.cloudinary.com/trinity-social/image/upload/v1688636280/tpii9dqwed9hkds8tnwr.jpg,https://res.cloudinary.com/trinity-social/image/upload/v1688636279/bymyaj1b9uvzai65hdje.jpg",
         "VideoUrls": "https://res.cloudinary.com/trinity-social/video/upload/v1688636285/gjvryfpz61q4l5tx4equ.mp4"
     },
     {
@@ -75,7 +75,7 @@ const data =  [
         "ProfilePicture": "profile.jpg",
         "LikeCount": 1,
         "CommentCount": 13,
-        "ImageUrls": ["https://res.cloudinary.com/trinity-social/image/upload/v1688636280/tpii9dqwed9hkds8tnwr.jpg","https://res.cloudinary.com/trinity-social/image/upload/v1688636279/bymyaj1b9uvzai65hdje.jpg"],
+        "ImageUrls": "https://res.cloudinary.com/trinity-social/image/upload/v1688636280/tpii9dqwed9hkds8tnwr.jpg,https://res.cloudinary.com/trinity-social/image/upload/v1688636279/bymyaj1b9uvzai65hdje.jpg",
         "VideoUrls": "https://res.cloudinary.com/trinity-social/video/upload/v1688636285/gjvryfpz61q4l5tx4equ.mp4"
     },
     {
@@ -87,7 +87,7 @@ const data =  [
         "ProfilePicture": "https://res.cloudinary.com/trinity-social/image/upload/v1688916649/y6q3qjenboawshlpmmwb.jpg",
         "LikeCount": 0,
         "CommentCount": 0,
-        "ImageUrls": ["https://res.cloudinary.com/trinity-social/image/upload/v1688636280/tpii9dqwed9hkds8tnwr.jpg","https://res.cloudinary.com/trinity-social/image/upload/v1688636279/bymyaj1b9uvzai65hdje.jpg"],
+        "ImageUrls": "https://res.cloudinary.com/trinity-social/image/upload/v1688636280/tpii9dqwed9hkds8tnwr.jpg,https://res.cloudinary.com/trinity-social/image/upload/v1688636279/bymyaj1b9uvzai65hdje.jpg",
         "VideoUrls": "https://res.cloudinary.com/trinity-social/video/upload/v1688636285/gjvryfpz61q4l5tx4equ.mp4"
     },
     {
@@ -99,7 +99,7 @@ const data =  [
         "ProfilePicture": "https://res.cloudinary.com/trinity-social/image/upload/v1688916649/y6q3qjenboawshlpmmwb.jpg",
         "LikeCount": 1,
         "CommentCount": 0,
-        "ImageUrls": ["https://res.cloudinary.com/trinity-social/image/upload/v1688636280/tpii9dqwed9hkds8tnwr.jpg","https://res.cloudinary.com/trinity-social/image/upload/v1688636279/bymyaj1b9uvzai65hdje.jpg"],
+        "ImageUrls": "https://res.cloudinary.com/trinity-social/image/upload/v1688636280/tpii9dqwed9hkds8tnwr.jpg,https://res.cloudinary.com/trinity-social/image/upload/v1688636279/bymyaj1b9uvzai65hdje.jpg",
         "VideoUrls": "https://res.cloudinary.com/trinity-social/video/upload/v1688636285/gjvryfpz61q4l5tx4equ.mp4"
     },
     {
@@ -111,7 +111,7 @@ const data =  [
         "ProfilePicture": "https://res.cloudinary.com/trinity-social/image/upload/v1688916649/y6q3qjenboawshlpmmwb.jpg",
         "LikeCount": 0,
         "CommentCount": 0,
-        "ImageUrls": ["https://res.cloudinary.com/trinity-social/image/upload/v1688636280/tpii9dqwed9hkds8tnwr.jpg","https://res.cloudinary.com/trinity-social/image/upload/v1688636279/bymyaj1b9uvzai65hdje.jpg"],
+        "ImageUrls": "https://res.cloudinary.com/trinity-social/image/upload/v1688636280/tpii9dqwed9hkds8tnwr.jpg,https://res.cloudinary.com/trinity-social/image/upload/v1688636279/bymyaj1b9uvzai65hdje.jpg",
         "VideoUrls": "https://res.cloudinary.com/trinity-social/video/upload/v1688636285/gjvryfpz61q4l5tx4equ.mp4"
     },
     {
@@ -123,7 +123,7 @@ const data =  [
         "ProfilePicture": "https://res.cloudinary.com/trinity-social/image/upload/v1688916649/y6q3qjenboawshlpmmwb.jpg",
         "LikeCount": 0,
         "CommentCount": 0,
-        "ImageUrls": ["https://res.cloudinary.com/trinity-social/image/upload/v1688636280/tpii9dqwed9hkds8tnwr.jpg","https://res.cloudinary.com/trinity-social/image/upload/v1688636279/bymyaj1b9uvzai65hdje.jpg"],
+        "ImageUrls": "https://res.cloudinary.com/trinity-social/image/upload/v1688636280/tpii9dqwed9hkds8tnwr.jpg,https://res.cloudinary.com/trinity-social/image/upload/v1688636279/bymyaj1b9uvzai65hdje.jpg",
         "VideoUrls": "https://res.cloudinary.com/trinity-social/video/upload/v1688636285/gjvryfpz61q4l5tx4equ.mp4"
     },
     {
@@ -135,7 +135,7 @@ const data =  [
         "ProfilePicture": "profile.jpg",
         "LikeCount": 0,
         "CommentCount": 0,
-        "ImageUrls": ["https://res.cloudinary.com/trinity-social/image/upload/v1688636280/tpii9dqwed9hkds8tnwr.jpg","https://res.cloudinary.com/trinity-social/image/upload/v1688636279/bymyaj1b9uvzai65hdje.jpg"],
+        "ImageUrls": "https://res.cloudinary.com/trinity-social/image/upload/v1688636280/tpii9dqwed9hkds8tnwr.jpg,https://res.cloudinary.com/trinity-social/image/upload/v1688636279/bymyaj1b9uvzai65hdje.jpg",
         "VideoUrls": "https://res.cloudinary.com/trinity-social/video/upload/v1688636285/gjvryfpz61q4l5tx4equ.mp4"
     },
     {
@@ -147,7 +147,7 @@ const data =  [
         "ProfilePicture": "profile.jpg",
         "LikeCount": 1,
         "CommentCount": 13,
-        "ImageUrls": ["https://res.cloudinary.com/trinity-social/image/upload/v1688636280/tpii9dqwed9hkds8tnwr.jpg","https://res.cloudinary.com/trinity-social/image/upload/v1688636279/bymyaj1b9uvzai65hdje.jpg"],
+        "ImageUrls": "https://res.cloudinary.com/trinity-social/image/upload/v1688636280/tpii9dqwed9hkds8tnwr.jpg,https://res.cloudinary.com/trinity-social/image/upload/v1688636279/bymyaj1b9uvzai65hdje.jpg",
         "VideoUrls": "https://res.cloudinary.com/trinity-social/video/upload/v1688636285/gjvryfpz61q4l5tx4equ.mp4"
     }
 ]

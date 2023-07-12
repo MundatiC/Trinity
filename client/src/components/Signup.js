@@ -10,11 +10,26 @@ export const Signup = () => {
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
   const [c_password, setc_password] = useState('');
-  const [ProfilePicture, setProfilePicture] = useState(null);
+  const [ProfilePicture, setProfilePicture] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [signupStatus, setSignupStatus] = useState('');
 
   const navigate = useNavigate();
+
+
+  const uploadImage = (files) => {
+    const formData = new FormData();
+    formData.append("file", files[0]);
+    formData.append("upload_preset", "faozlxxi");
+    fetch("https://api.cloudinary.com/v1_1/trinity-social/image/upload", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setProfilePicture(data.secure_url);
+      });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,14 +42,14 @@ export const Signup = () => {
       Email,
       Password,
       c_password,
-      ProfilePicture,
+      ProfilePicture: ProfilePicture,
     };
     console.log(registrationData);
     try {
       const response = await axios.post('http://localhost:5050/register', registrationData);
       setSignupStatus('success');
       console.log(response);
-      navigate('/feed');
+      navigate('/');
     } catch (error) {
       if (error.response) {
         console.error('Server Error:', error.response.data);
@@ -92,7 +107,16 @@ export const Signup = () => {
             value={c_password}
             onChange={(e) => setc_password(e.target.value)}
           />
-          <UploadWidget onImageUpload={setProfilePicture} />
+
+          <input
+            type="file"
+            id="myFile"
+            name="filename"
+            
+            accept="image/png, image/jpeg,image/jpg"
+            onChange={(e) => uploadImage(e.target.files)}
+          />
+
           {passwordError && <p className="error">{passwordError}</p>}
           <button>Signup</button>
         </form>
