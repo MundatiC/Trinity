@@ -23,9 +23,13 @@ export const Login = () => {
     try {
       const response = await axios.post(
         "http://localhost:5050/login",
-        loginData
+        loginData,
+        {
+          withCredentials: true,
+        }
+       
       );
-      console.log(response.data)
+      console.log(response)
 
       // Handle successful login response here
 

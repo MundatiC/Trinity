@@ -2,7 +2,6 @@ import './App.css';
 import  Home  from './components/Home'
 import  Login  from './components/Login'
 import  Signup  from './components/Signup'
-import UploadWidget from './components/UploadWidget';
 import {
   createBrowserRouter,
   Route,
@@ -17,7 +16,6 @@ const myRouter = createBrowserRouter(
    
     <Route path="/home" element={<Home />} />
     <Route path="/signup" element={<Signup />} />
-    <Route path='/upload' element={<UploadWidget/>}/>
     <Route path="/" element={<Login />} />
     </Route>
    

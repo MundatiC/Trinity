@@ -7,7 +7,7 @@ import axios from "axios";
 
 const data =  [
     {
-        "PostId": 16,
+        "PostId": 34,
         "UserId": 79,
         "Content": "Bang",
         "CreatedAt": "2023-07-06T15:37:31.840Z",
@@ -79,7 +79,7 @@ const data =  [
         "VideoUrls": "https://res.cloudinary.com/trinity-social/video/upload/v1688636285/gjvryfpz61q4l5tx4equ.mp4"
     },
     {
-        "PostId": 16,
+        "PostId": 20,
         "UserId": 79,
         "Content": "Bang",
         "CreatedAt": "2023-07-06T15:37:31.840Z",
@@ -91,7 +91,7 @@ const data =  [
         "VideoUrls": "https://res.cloudinary.com/trinity-social/video/upload/v1688636285/gjvryfpz61q4l5tx4equ.mp4"
     },
     {
-        "PostId": 15,
+        "PostId": 56,
         "UserId": 79,
         "Content": "Bang",
         "CreatedAt": "2023-07-06T13:08:55.200Z",
@@ -103,7 +103,7 @@ const data =  [
         "VideoUrls": "https://res.cloudinary.com/trinity-social/video/upload/v1688636285/gjvryfpz61q4l5tx4equ.mp4"
     },
     {
-        "PostId": 14,
+        "PostId": 67,
         "UserId": 79,
         "Content": "Wicked",
         "CreatedAt": "2023-07-06T12:41:59.973Z",
@@ -115,7 +115,7 @@ const data =  [
         "VideoUrls": "https://res.cloudinary.com/trinity-social/video/upload/v1688636285/gjvryfpz61q4l5tx4equ.mp4"
     },
     {
-        "PostId": 13,
+        "PostId": 68,
         "UserId": 79,
         "Content": "Hi yaal",
         "CreatedAt": "2023-07-06T12:38:06.817Z",
@@ -127,7 +127,7 @@ const data =  [
         "VideoUrls": "https://res.cloudinary.com/trinity-social/video/upload/v1688636285/gjvryfpz61q4l5tx4equ.mp4"
     },
     {
-        "PostId": 12,
+        "PostId": 69,
         "UserId": 70,
         "Content": "Check out this image and video!",
         "CreatedAt": "2023-07-06T12:31:29.137Z",
@@ -139,7 +139,7 @@ const data =  [
         "VideoUrls": "https://res.cloudinary.com/trinity-social/video/upload/v1688636285/gjvryfpz61q4l5tx4equ.mp4"
     },
     {
-        "PostId": 11,
+        "PostId": 70,
         "UserId": 70,
         "Content": "Check out this image and video!",
         "CreatedAt": "2023-07-04T09:55:06.147Z",
@@ -155,22 +155,32 @@ const data =  [
 
 function Feed() {
   const [posts, setPosts] = useState([]);
+  const [activePost, setActivePost] = useState(null);
+
+  const handlePostClick = (post) => {
+    setActivePost(post);
+    console.log('post clicked')
+  };
   
 
   useEffect(() => {
-    setPosts(data);
-    console.log(posts)
+    // setPosts(data);
+    // console.log(posts)
     const fetchPosts = async () => {
         
         
         
-    //   try {
-    //     const response = await axios.get("http://localhost:5051/feed");
-    //     console.log(response)
-    //     // setPosts(response.data.posts);
-    //   } catch (error) {
-    //     console.error("Error fetching posts:", error);
-    //   }
+      try {
+        const response = await axios.get("http://localhost:5051/feed",
+        {
+          withCredentials: true,
+        });
+        console.log(response)
+        setPosts(response.data.data);
+        console.log(posts)
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
     };
 
     fetchPosts();
@@ -186,10 +196,18 @@ function Feed() {
 
       <FlipMove>
         {posts.map((post) => (
-          <Post key={post.PostId} post={post} />
+          <Post key={post.PostId} post={post} onClick={handlePostClick} />
          
         ))}
       </FlipMove>
+
+       {/* Render the active post and its comments */}
+       {activePost && (
+        <div className="active-post">
+          <Post post={activePost} />
+          {/* Add the component to display comments here */}
+        </div>
+      )}
     </div>
   );
 }
