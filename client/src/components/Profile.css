@@ -5,6 +5,11 @@
  --twitter-background: #e6ecf0;
     border-radius: 10px;
     width: 70%;
+    overflow-y: scroll;
+  }
+
+  .profile::-webkit-scrollbar {
+    display: none;
   }
   
   .profile-header {

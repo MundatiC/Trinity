@@ -11,6 +11,7 @@ const Post = forwardRef(({ post }, ref) => {
 
   // Convert comma-separated ImageUrls string to an array
   const imageUrls = post.ImageUrls?.split(",") || [];
+  const videoUrls = post.VideoUrls?.split(",") || [];
 
   const handleCommentChange = (event) => {
     setComment(event.target.value);
@@ -49,13 +50,22 @@ const Post = forwardRef(({ post }, ref) => {
           </div>
         </div>
 
-        {imageUrls.length > 0 && (
+        {imageUrls.length > -1 && (
           <div className="image">
             {imageUrls.map((url) => (
               <img key={url} src={url} alt="" />
             ))}
+
           </div>
         )}
+        {/* {videoUrls.length > -1 && (
+          <div className="video">
+         {videoUrls.map((url) => (
+              <video key={url} src={url} alt="" />
+            ))}
+
+            </div>
+        )} */}
 
         <div className="post__footer">
           <ChatBubbleOutlineIcon fontSize="small" onClick={handleCommentIconClick} />
