@@ -53,3 +53,49 @@
 .post__avatar {
   padding: 20px;
 }
+
+.comment {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.comment form {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.comment input {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+}
+
+.comment button {
+  margin-left: 10px;
+  padding: 6px 12px;
+  background-color: var(--lighter);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.comment button:hover {
+  background-color: var(--twitter-color);
+}
+
+.comment input:focus,
+.comment button:focus {
+  outline: none;
+}
+
+.comment img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}

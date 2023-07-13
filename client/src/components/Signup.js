@@ -3,7 +3,7 @@ import logo from './images/logo1.png';
 import '../App.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import UploadWidget from './UploadWidget';
+
 
 export const Signup = () => {
   const [Username, setUsername] = useState('');
