@@ -4,10 +4,10 @@ import { Avatar, Button } from "@material-ui/core";
 import PhotoIcon from "@material-ui/icons/Photo";
 import VideoLibraryIcon from "@material-ui/icons/VideoLibrary";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer,toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-toast.configure();
+
 
 function TweetBox() {
   const [tweetMessage, setTweetMessage] = useState("");
@@ -26,12 +26,6 @@ function TweetBox() {
 
   const sendTweet = async (e) => {
     e.preventDefault();
-
-    // Check if tweetMessage is empty
-    if (tweetMessage.trim().length === 0) {
-      toast.error("Please enter a tweet message.");
-      return;
-    }
 
     // Handle image and video upload logic here
     let imageUploadUrl = null;
@@ -65,11 +59,16 @@ function TweetBox() {
       ImageUrls: imageUploadUrl,
       VideoUrls: videoUploadUrl,
     };
-    const response = await axios.post("http://localhost:5051/createPost", data, {
-      withCredentials: true,
-    });
+    const response = await axios.post(
+      "http://localhost:5051/createPost",
+      data,
+      {
+        withCredentials: true,
+      }
+    );
 
     if (response.status === 200) {
+     
       toast.success("Post created successfully!");
     } else {
       toast.error("Failed to create post.");
@@ -83,16 +82,17 @@ function TweetBox() {
 
   return (
     <div className="tweetBox">
+      <ToastContainer/>
+      
       <form onSubmit={sendTweet}>
         <div className="tweetBox__input">
           <Avatar src="https://res.cloudinary.com/trinity-social/image/upload/v1689102278/kf3bjc6u5frthpjsbscs.jpg" />
           <input
             onChange={(e) => setTweetMessage(e.target.value)}
             value={tweetMessage}
-            required
             placeholder="Describe your post here..."
             type="text"
-            
+            required
           />
         </div>
         <div className="tweetBox__options">
@@ -121,12 +121,13 @@ function TweetBox() {
         </div>
 
         <Button
-          type="submit"
-          className="tweetBox__tweetButton"
-        >
+      type="submit"
+      className="tweetBox__tweetButton"
+      disabled={tweetMessage.length === 0}
+    >
           Post
         </Button>
-        <ToastContainer />
+        
       </form>
     </div>
   );
