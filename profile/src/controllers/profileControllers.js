@@ -120,6 +120,31 @@ async function changePassword(req, res){
 
 }
 
+async function getLikedPosts(req, res){
+  const UserId = req.session?.user.UserId;
+  const { pool } = req;
+
+  try {
+    if (pool.connected) {
+      const request = pool.request();
+      request.input('SpecificUserId', UserId);
+
+      let result = await request.execute('GetPostsLikedByUser');
+      console.log(result);
+
+      if (result) {
+        res.json({
+          success: true,
+          message: 'Successfully retreived liked posts',
+          data: result.recordset,
+        });
+      }
+    }
+  } catch (error) {
+    res.send(error.message);
+  }
+}
+
 
 
 
@@ -129,4 +154,4 @@ async function changePassword(req, res){
 
   
 
-module.exports = {editProfile, showProfile,changePassword}
+module.exports = {editProfile, showProfile,changePassword, getLikedPosts}

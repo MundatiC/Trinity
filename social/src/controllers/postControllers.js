@@ -61,67 +61,35 @@ async function getUserPosts(req, res) {
 
 
 async function createPost(req, res) {
-    const UserId = req.session?.user.UserId
+    const UserId = req.session?.user.UserId;
     const { Content, ImageUrls, VideoUrls } = req.body;
-
-    const { pool } = req
-
+  
+    const { pool } = req;
+  
     try {
-       
-        if (pool.connected) {
-
-            let uploadedImageUrls = [];
-            if (ImageUrls) {
-                const imageUrlsArray = ImageUrls.split(',');
-                if (imageUrlsArray.length === 1) {
-                    const imageUrl = await upload(imageUrlsArray[0], 'image');
-                    uploadedImageUrls.push(imageUrl);
-                } else {
-                    uploadedImageUrls = await Promise.all(imageUrlsArray.map((path) => upload(path, 'image')));
-                }
-            }
-
-            // Upload videos
-            let uploadedVideoUrls = [];
-            if (VideoUrls) {
-                const videoUrlsArray = VideoUrls.split(',');
-                if (videoUrlsArray.length === 1) {
-                    const videoUrl = await upload(videoUrlsArray[0], 'video');
-                    uploadedVideoUrls.push(videoUrl);
-                } else {
-                    uploadedVideoUrls = await Promise.all(videoUrlsArray.map((path) => upload(path, 'video')));
-                }
-            }
-
-
-            const request = pool.request();
-
-            
-
-
-            request.input('UserId', UserId)
-                .input('Content', Content)
-                .input('ImageUrls', uploadedImageUrls.join(','))
-                .input('VideoUrls', uploadedVideoUrls.join(','))
-
-                let result = await request.execute('AddPost');    
-                
-            if(result.rowsAffected[0] > 0){
-                res.json({
-                    success: true,
-                    message: "Post created successfully"
-                    
-                })
-            }
-            
-
+      if (pool.connected) {
+        const request = pool.request();
+  
+        request.input("UserId", UserId)
+          .input("Content", Content)
+          .input("ImageUrls", ImageUrls)
+          .input("VideoUrls", VideoUrls);
+  
+        let result = await request.execute("AddPost");
+  
+        if (result.rowsAffected[0] > 0) {
+          res.json({
+            success: true,
+            message: "Post created successfully",
+          });
         }
-
+      }
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: error.message });
+      console.error(error);
+      res.status(500).json({ error: error.message });
     }
-}
+  }
+  
 
 async function getPost(req, res) {
     const  PostId  = req.params.id;

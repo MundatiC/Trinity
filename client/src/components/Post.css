@@ -13,14 +13,28 @@
 }
 
 .image {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, min-content));
-  grid-gap: 10px;
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  gap: 10px;
+}
+
+
+
+
+
+.image{
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.image::-webkit-scrollbar {
+  display: none;
 }
 
 .post__body img {
   border-radius: 20px;
-  width: 100%;
+  width: 80%;
 }
 
 .post__footer {
