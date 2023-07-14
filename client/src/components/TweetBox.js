@@ -17,6 +17,7 @@ function TweetBox() {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setTweetImage(file);
+    console.log('first')
   };
 
   const handleVideoChange = (e) => {
@@ -51,6 +52,7 @@ function TweetBox() {
         videoData
       );
       videoUploadUrl = response.data.secure_url;
+      console.log(videoUploadUrl)
     }
 
     // Make API call to your endpoint

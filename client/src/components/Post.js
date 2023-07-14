@@ -1,15 +1,19 @@
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef, useState, useEffect, useRef } from "react";
 import "./Post.css";
 import { Avatar } from "@material-ui/core";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import { FaPlay, FaPause, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 
 const Post = forwardRef(({ post }, ref) => {
-  const [comment, setComment] = useState(""); // State for the comment input
-  const [showCommentInput, setShowCommentInput] = useState(false); // State to toggle comment input
+  const [comment, setComment] = useState("");
+  const [showCommentInput, setShowCommentInput] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const videoRef = useRef(null);
 
-  // Convert comma-separated ImageUrls string to an array
   const imageUrls = post.ImageUrls?.split(",") || [];
   const videoUrls = post.VideoUrls?.split(",") || [];
 
@@ -19,7 +23,6 @@ const Post = forwardRef(({ post }, ref) => {
 
   const handleCommentSubmit = (event) => {
     event.preventDefault();
-    // Handle comment submission here (e.g., send to backend)
     console.log(comment);
     setComment("");
   };
@@ -27,6 +30,48 @@ const Post = forwardRef(({ post }, ref) => {
   const handleCommentIconClick = () => {
     setShowCommentInput(!showCommentInput);
   };
+
+  const handlePlayPause = () => {
+    const videoElement = videoRef.current;
+
+    if (videoElement.paused) {
+      videoElement.play();
+      setIsPlaying(true);
+    } else {
+      videoElement.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  const handleVideoHover = () => {
+    setIsHovered(!isHovered);
+  };
+
+  const handleSoundToggle = () => {
+    setIsMuted(!isMuted);
+  };
+
+  useEffect(() => {
+    const videoElement = videoRef.current;
+
+    if (videoElement) {
+      const handlePlay = () => {
+        setIsPlaying(true);
+      };
+
+      const handlePause = () => {
+        setIsPlaying(false);
+      };
+
+      videoElement.addEventListener("play", handlePlay);
+      videoElement.addEventListener("pause", handlePause);
+
+      return () => {
+        videoElement.removeEventListener("play", handlePlay);
+        videoElement.removeEventListener("pause", handlePause);
+      };
+    }
+  }, []);
 
   return (
     <div className="post" ref={ref}>
@@ -50,29 +95,67 @@ const Post = forwardRef(({ post }, ref) => {
           </div>
         </div>
 
-        {imageUrls.length > -1 && (
+        {imageUrls.length > 0 && (
           <div className="image">
             {imageUrls.map((url) => (
               <img key={url} src={url} alt="" />
             ))}
-
           </div>
         )}
-        {/* {videoUrls.length > -1 && (
-          <div className="video">
-         {videoUrls.map((url) => (
-              <video key={url} src={url} alt="" />
-            ))}
 
-            </div>
-        )} */}
+        {videoUrls.length > 0 && (
+          <div className="video">
+            {videoUrls.map((url) => (
+              <div
+                key={url}
+                className="video-wrapper"
+                onMouseEnter={handleVideoHover}
+                onMouseLeave={handleVideoHover}
+              >
+                <video
+                  src={url}
+                  ref={videoRef}
+                  muted={isMuted}
+                />
+                {isHovered && (
+                  <div className="video-overlay">
+                    {isPlaying ? (
+                      <FaPause
+                        className="play-pause-icon"
+                        onClick={handlePlayPause}
+                      />
+                    ) : (
+                      <FaPlay
+                        className="play-pause-icon"
+                        onClick={handlePlayPause}
+                      />
+                    )}
+                  </div>
+                )}
+                <div className="mute-button">
+                  
+                  {isMuted ? (
+                    <FaVolumeMute
+                      className="volume-icon"
+                      onClick={handleSoundToggle}
+                    />
+                  ) : (
+                    <FaVolumeUp
+                      className="volume-icon"
+                      onClick={handleSoundToggle}
+                    />
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
 
         <div className="post__footer">
           <ChatBubbleOutlineIcon fontSize="small" onClick={handleCommentIconClick} />
           <FavoriteBorderIcon fontSize="small" />
         </div>
 
-        {/* Comment input */}
         {showCommentInput && (
           <div className="comment">
             <Avatar src={post.ProfilePicture} />
