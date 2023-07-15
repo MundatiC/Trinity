@@ -19,7 +19,7 @@ postRouter.get("/post/:id", getPost)
 
 postRouter.post("/likePost", likePost)
 
-postRouter.get("/replies", getRepliesForComment)
+postRouter.get("/replies/:CommentId", getRepliesForComment)
 
 postRouter.post("/commentOnPost", commentOnPost)
 
@@ -29,7 +29,7 @@ postRouter.post("/replytoComment", replytoComment)
 
 postRouter.put("/deletePost", deletePost)
 
-postRouter.post("/search", searchByUsername)
+postRouter.get("/search/:term", searchByUsername)
 
 
 

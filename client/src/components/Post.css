@@ -6,6 +6,9 @@
   box-sizing: border-box;
   width: 100%;
 }
+.post:active{
+  background-color: var(--lighter);
+}
 
 .post__body {
   flex: 1;
@@ -87,6 +90,16 @@ video {
   justify-content: space-between;
   margin-top: 20px;
 }
+ .chat, .like {
+ display: flex;
+ flex-direction: row;
+ gap: 0.3em;
+ }
+ .post__footer .like.liked {
+  color: var(--twitter-color); 
+}
+
+
 
 .post__headerDescription {
   margin-bottom: 10px;

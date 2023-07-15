@@ -230,7 +230,7 @@ async function replytoComment (req, res) {
 
 async function getRepliesForComment(req,res){
    
-    const { CommentId } = req.body;
+    const { CommentId } = req.params;
     const { pool } = req
 
     try {
@@ -292,7 +292,7 @@ async function likeComment(req, res){
 
 async function searchByUsername(req,res){
     
-    const { username } = req.body;
+    const username   = req.params.term;
     const { pool } = req
 
     try {

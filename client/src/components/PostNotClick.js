@@ -7,16 +7,13 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import { FaPlay, FaPause, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import axios from "axios";
 
-const Post = forwardRef(({ post, onClick }, ref) => {
-  const handlePostClick = () => {
-    onClick(post);
-  };
+const Post = forwardRef(({ post  }, ref) => {
+ 
   const [comment, setComment] = useState("");
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [isLiked, setIsLiked] = useState(post.IsLiked || false); // Track the like status
   const videoRef = useRef(null);
 
   const imageUrls = post.ImageUrls?.split(",") || [];
@@ -28,23 +25,20 @@ const Post = forwardRef(({ post, onClick }, ref) => {
 
   const handleCommentSubmit = async (event) => {
     event.preventDefault();
-    const PostId = post.PostId;
+    console.log(comment);
+    const PostId = post.PostId
     console.log(comment);
     const data = {
       PostId: PostId,
       Content: comment,
     };
-    console.log(data);
+    console.log(data)
 
-    const response = await axios.post(
-      "http://localhost:5051/commentOnPost",
-      data,
-      {
-        withCredentials: true,
-      }
-    );
-    console.log(response);
-
+    const response = await axios.post("http://localhost:5051/commentOnPost", data, {
+      withCredentials: true
+    }
+    )
+    console.log(response)
     setComment("");
   };
 
@@ -70,26 +64,6 @@ const Post = forwardRef(({ post, onClick }, ref) => {
 
   const handleSoundToggle = () => {
     setIsMuted(!isMuted);
-  };
-
-  const handleLikeClick = async () => {
-    const PostId ={ PostId: post.PostId};
-    console.log(PostId)
-
-    try {
-      
-      const response = await axios.post(
-        `http://localhost:5051/likePost`,
-        PostId,
-        {
-          withCredentials: true,
-        }
-      );
-
-      setIsLiked(!isLiked); // Toggle the like status
-    } catch (error) {
-      console.error("Error liking/unliking post:", error);
-    }
   };
 
   useEffect(() => {
@@ -120,7 +94,7 @@ const Post = forwardRef(({ post, onClick }, ref) => {
         <Avatar src={post.ProfilePicture} />
       </div>
       <div className="post__body">
-        <div className="post__header" onClick={handlePostClick}>
+        <div className="post__header">
           <div className="post__headerText">
             <h3>
               {post.User}{" "}
@@ -153,7 +127,11 @@ const Post = forwardRef(({ post, onClick }, ref) => {
                 onMouseEnter={handleVideoHover}
                 onMouseLeave={handleVideoHover}
               >
-                <video src={url} ref={videoRef} muted={isMuted} />
+                <video
+                  src={url}
+                  ref={videoRef}
+                  muted={isMuted}
+                />
                 {isHovered && (
                   <div className="video-overlay">
                     {isPlaying ? (
@@ -170,6 +148,7 @@ const Post = forwardRef(({ post, onClick }, ref) => {
                   </div>
                 )}
                 <div className="mute-button">
+                  
                   {isMuted ? (
                     <FaVolumeMute
                       className="volume-icon"
@@ -188,16 +167,11 @@ const Post = forwardRef(({ post, onClick }, ref) => {
         )}
 
         <div className="post__footer">
-          <div className="chat">
-            <ChatBubbleOutlineIcon
-              fontSize="medium"
-              onClick={handleCommentIconClick}
-            />
-            <span>{post.CommentCount}</span>
+        <div className="chat">
+          <ChatBubbleOutlineIcon fontSize="medium" onClick={handleCommentIconClick} /><span>{post.CommentCount}</span>
           </div>
-          <div className={`like ${isLiked ? "liked" : ""}`} onClick={handleLikeClick}>
-            <FavoriteBorderIcon fontSize="medium" />
-            <span>{post.LikeCount}</span>
+          <div className="like">
+          <FavoriteBorderIcon fontSize="medium" /><span>{post.LikeCount}</span>
           </div>
         </div>
 
@@ -209,7 +183,6 @@ const Post = forwardRef(({ post, onClick }, ref) => {
                 type="text"
                 placeholder="Write a comment..."
                 value={comment}
-                required
                 onChange={handleCommentChange}
               />
               <button type="submit">Post</button>
