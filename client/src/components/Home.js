@@ -7,6 +7,7 @@ import Notifications from './Notifications';
 import Profile from './Profile';
 import Settings from './Settings';
 import Post from './Post';
+import Footer from './Footer';
 
 export const Home = () => {
   const [activeComponent, setActiveComponent] = useState('feed');
@@ -21,17 +22,32 @@ export const Home = () => {
     setActiveComponent('post');
   };
 
+  const isSearchSelected = activeComponent === 'search';
+
   return (
-    <div className='awesome'>
+    <div className="awesome">
+      
       <Sidebar onComponentClick={renderComponent} />
-      {activeComponent === 'feed' && <Feed onPostClick={handlePostClick} />}
-      {activeComponent === 'search' && <Search />}
-      {activeComponent === 'notifications' && <Notifications />}
-      {activeComponent === 'profile' && <Profile />}
-      {activeComponent === 'settings' && <Settings />}
-      {activeComponent === 'post' && (
-        <Post post={activePost} showComments={true} onClose={() => setActiveComponent('feed')} />
-      )}
+    
+     
+      <div className="main-section">
+        {isSearchSelected ? (
+          <Search />
+        ) : (
+          <>
+            {activeComponent === 'feed' && <Feed onPostClick={handlePostClick} />}
+            {activeComponent === 'notifications' && <Notifications />}
+            {activeComponent === 'profile' && <Profile />}
+            {activeComponent === 'settings' && <Settings />}
+            {activeComponent === 'post' && (
+              <Post post={activePost} showComments={true} onClose={() => setActiveComponent('feed')} />
+            )}
+          </>
+        )}
+      </div>
+      <div className="third-section">
+        {isSearchSelected ? <Footer /> : <Search />}
+      </div>
     </div>
   );
 };

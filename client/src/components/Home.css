@@ -1,8 +1,18 @@
 .awesome {
-    display: flex;
-    height: 100vh;
-    max-width: 1300px;
-    margin-left: 0;
-    margin-right: auto;
-    padding: 0 10px;
-  }
+  display: flex;
+  height: 100vh;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+
+.main-section {
+  flex: 1;
+}
+
+.third-section {
+  flex-shrink: 0;
+  width: 300px;
+  margin-left: 10px;
+}
