@@ -230,7 +230,7 @@ async function replytoComment (req, res) {
 
 async function getRepliesForComment(req,res){
    
-    const { CommentId } = req.body;
+    const { CommentId } = req.params;
     const { pool } = req
 
     try {

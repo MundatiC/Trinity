@@ -19,7 +19,7 @@ postRouter.get("/post/:id", getPost)
 
 postRouter.post("/likePost", likePost)
 
-postRouter.get("/replies", getRepliesForComment)
+postRouter.get("/replies/:CommentId", getRepliesForComment)
 
 postRouter.post("/commentOnPost", commentOnPost)
 

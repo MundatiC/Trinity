@@ -20,6 +20,11 @@
     justify-content: space-between;
     margin-top: 20px;
   }
+  .reply, .like {
+    display: flex;
+    flex-direction: row;
+    gap: 0.3em;
+    }
   
   .comment__headerDescription {
     margin-bottom: 10px;
