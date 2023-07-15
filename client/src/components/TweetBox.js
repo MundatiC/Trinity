@@ -92,7 +92,7 @@ function TweetBox() {
           <input
             onChange={(e) => setTweetMessage(e.target.value)}
             value={tweetMessage}
-            placeholder="Describe your post here..."
+            placeholder="Type your message here..."
             type="text"
             required
           />

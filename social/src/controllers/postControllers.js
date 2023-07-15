@@ -292,7 +292,7 @@ async function likeComment(req, res){
 
 async function searchByUsername(req,res){
     
-    const { username } = req.body;
+    const username   = req.params.term;
     const { pool } = req
 
     try {

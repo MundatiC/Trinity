@@ -29,7 +29,7 @@ postRouter.post("/replytoComment", replytoComment)
 
 postRouter.put("/deletePost", deletePost)
 
-postRouter.post("/search", searchByUsername)
+postRouter.get("/search/:term", searchByUsername)
 
 
 
