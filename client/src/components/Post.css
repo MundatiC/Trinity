@@ -95,6 +95,9 @@ video {
  flex-direction: row;
  gap: 0.3em;
  }
+ .post__footer .like.liked {
+  color: var(--twitter-color); 
+}
 
 
 
