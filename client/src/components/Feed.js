@@ -5,34 +5,16 @@ import "./Feed.css";
 import FlipMove from "react-flip-move";
 import axios from "axios";
 
-
-
-
-function Feed() {
+function Feed({ onPostClick }) {
   const [posts, setPosts] = useState([]);
-  const [activePost, setActivePost] = useState(null);
-
-  const handlePostClick = (post) => {
-    setActivePost(post);
-    console.log('post clicked')
-  };
-  
 
   useEffect(() => {
-    // setPosts(data);
-    // console.log(posts)
     const fetchPosts = async () => {
-        
-        
-        
       try {
-        const response = await axios.get("http://localhost:5051/feed",
-        {
+        const response = await axios.get("http://localhost:5051/feed", {
           withCredentials: true,
         });
-        console.log(response)
         setPosts(response.data.data);
-        console.log(posts)
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
@@ -40,6 +22,12 @@ function Feed() {
 
     fetchPosts();
   }, []);
+
+  const handlePostClick = (post) => {
+    onPostClick(post);
+  };
+
+  const MemoizedPost = React.memo(Post);
 
   return (
     <div className="feed">
@@ -51,18 +39,13 @@ function Feed() {
 
       <FlipMove>
         {posts.map((post) => (
-          <Post key={post.PostId} post={post} onClick={handlePostClick} />
-         
+          <MemoizedPost
+            key={post.PostId}
+            post={post}
+            onClick={() => handlePostClick(post)}
+          />
         ))}
       </FlipMove>
-
-       {/* Render the active post and its comments */}
-       {activePost && (
-        <div className="active-post">
-          <Post post={activePost} />
-          {/* Add the component to display comments here */}
-        </div>
-      )}
     </div>
   );
 }

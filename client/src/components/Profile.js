@@ -4,7 +4,7 @@ import FlipMove from 'react-flip-move';
 import Post from './Post';
 import axios from 'axios';
 
-const Profile = () => {
+const Profile = ({onPostClick}) => {
   const [profileData, setProfileData] = useState({});
   const [likedPosts, setLikedPosts] = useState([]);
   const [myPosts, setMyPosts] = useState([]);
@@ -15,6 +15,10 @@ const Profile = () => {
     fetchLikedPosts();
     fetchMyPosts();
   }, []);
+  const handlePostClick = (post) => {
+    console.log('working')
+    onPostClick(post);
+  };
 
   const fetchProfileData = async () => {
     try {
@@ -61,6 +65,7 @@ const Profile = () => {
   return (
     <>
       <div className="profile">
+        <div className='profile-content'>
         <div className="profile-header">
           <div className="profile-avatar">
             {profileData.ProfilePicture ? (
@@ -101,9 +106,16 @@ const Profile = () => {
             LIKES
           </div>
         </div>
+
+        </div>
+        
         <FlipMove>
           {filteredPosts.map((post) => (
-            <Post key={post.PostId} post={post} />
+             <Post
+             key={post.PostId}
+             post={post}
+             onClick={() => handlePostClick(post)}
+           />
           ))}
         </FlipMove>
       </div>

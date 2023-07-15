@@ -1,15 +1,17 @@
 .profile {
     
-    margin: 0 auto;
-    padding: 20px;
- --twitter-background: #e6ecf0;
-    border-radius: 10px;
-    width: 70%;
-    overflow-y: scroll;
+  flex: 0.6;
+  border-right: 1px solid var(--twitter-background);
+  min-width: 60%;
+  overflow-y: scroll;
   }
+ 
 
   .profile::-webkit-scrollbar {
     display: none;
+  }
+  .profile-content{
+    margin: 20px;
   }
   
   .profile-header {

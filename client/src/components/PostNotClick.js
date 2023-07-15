@@ -7,10 +7,8 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import { FaPlay, FaPause, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import axios from "axios";
 
-const Post = forwardRef(({ post, onClick  }, ref) => {
-  const handlePostClick = () => {
-    onClick(post);
-  };
+const Post = forwardRef(({ post  }, ref) => {
+ 
   const [comment, setComment] = useState("");
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -25,8 +23,9 @@ const Post = forwardRef(({ post, onClick  }, ref) => {
     setComment(event.target.value);
   };
 
-  const handleCommentSubmit =  async (event) => {
+  const handleCommentSubmit = async (event) => {
     event.preventDefault();
+    console.log(comment);
     const PostId = post.PostId
     console.log(comment);
     const data = {
@@ -40,7 +39,6 @@ const Post = forwardRef(({ post, onClick  }, ref) => {
     }
     )
     console.log(response)
-    
     setComment("");
   };
 
@@ -91,12 +89,12 @@ const Post = forwardRef(({ post, onClick  }, ref) => {
   }, []);
 
   return (
-    <div className="post"  ref={ref}>
+    <div className="post" ref={ref}>
       <div className="post__avatar">
         <Avatar src={post.ProfilePicture} />
       </div>
-      <div className="post__body" >
-        <div className="post__header" onClick={handlePostClick}>
+      <div className="post__body">
+        <div className="post__header">
           <div className="post__headerText">
             <h3>
               {post.User}{" "}
@@ -169,14 +167,12 @@ const Post = forwardRef(({ post, onClick  }, ref) => {
         )}
 
         <div className="post__footer">
-          <div className="chat">
+        <div className="chat">
           <ChatBubbleOutlineIcon fontSize="medium" onClick={handleCommentIconClick} /><span>{post.CommentCount}</span>
           </div>
           <div className="like">
           <FavoriteBorderIcon fontSize="medium" /><span>{post.LikeCount}</span>
           </div>
-          
-         
         </div>
 
         {showCommentInput && (
@@ -187,7 +183,6 @@ const Post = forwardRef(({ post, onClick  }, ref) => {
                 type="text"
                 placeholder="Write a comment..."
                 value={comment}
-                required
                 onChange={handleCommentChange}
               />
               <button type="submit">Post</button>
