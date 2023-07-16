@@ -16,7 +16,6 @@
 }
 
 .third-section {
-  width: 400px;
   flex: 0.6;
   flex-shrink: 0;
   margin-left: 10px;

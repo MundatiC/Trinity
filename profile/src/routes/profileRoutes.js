@@ -13,7 +13,7 @@ profileRouter.get("/showProfile", showProfile )
 
 profileRouter.get("/getLikedPosts", getLikedPosts)
 
-profileRouter.post("/changePassword", changePassword)
+profileRouter.put("/changePassword", changePassword)
 
 profileRouter.get("/getUser", getUser )
 

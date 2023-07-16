@@ -61,29 +61,67 @@ function Settings() {
 
     try {
       // Update username
-      await axios.put('/user/username', { Username });
+      const response = await axios.put('http://localhost:5052/editProfile',{
+        Username
+      }, {
+        withCredentials: true,
+      });
 
       // Update bio
-      await axios.put('/user/bio', { Bio });
+      const response2 = await axios.put('http://localhost:5052/editProfile',{
+        Bio
+      }, {
+        withCredentials: true,
+      });
+      console.log(response2)
 
       // Update profile picture
       if (profilePicture) {
         const formData = new FormData();
-        formData.append('profilePicture', profilePicture);
-        await axios.put('/user/profilePicture', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        });
+        formData.append('file', profilePicture);
+        formData.append('upload_preset', 'faozlxxi');
+        const response = await axios.post(
+            "https://api.cloudinary.com/v1_1/trinity-social/image/upload",
+            formData
+          );
+            console.log(response)
+          const ProfilePicture = response.data.secure_url;
+          console.log(ProfilePicture)
+
+          if(response.data.secure_url){
+            const response3 = await axios.put('http://localhost:5052/editProfile',{
+                ProfilePicture
+              }, {
+                withCredentials: true,
+              });
+                console.log(response3)
+          } else{
+            setErrorMessage('Failed to update settings. Please try again.');
+          }
+
+         
+
       }
 
       // Update password
       if (newPassword && newPassword === confirmPassword) {
-        await axios.put('/user/password', {
+        await axios.put('http://localhost:5052/changePassword', {
           currentPassword,
           newPassword,
+        },{
+            withCredentials: true
         });
+        setSuccessMessage('Settings updated successfully!');
+      }
+      else{
+        setErrorMessage('Incorrect password or password did not match. Please try again.');
       }
 
-      setSuccessMessage('Settings updated successfully!');
+      setConfirmPassword('');
+      setCurrentPassword('');
+      setProfilePicture(null);
+      setNewPassword('');
+     
     } catch (error) {
       console.error('Error updating user settings:', error);
       setErrorMessage('Failed to update settings. Please try again.');
@@ -120,7 +158,7 @@ function Settings() {
           <input
             type="file"
             id="profilePicture"
-            accept=".jpg, .jpeg, .png"
+            accept="image/*"
             className="input"
             onChange={handleProfilePictureChange}
           />

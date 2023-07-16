@@ -17,10 +17,14 @@ async function editProfile(req, res) {
             if (value.Username) {
                 request.input('Username', value.Username);
             }
+
+            if (value.Bio) {
+              request.input('Bio', value.Bio);
+          }
             
             if (value.ProfilePicture) {
-                let ProfilePicture = await uploadProfile(value.ProfilePicture);
-                request.input('ProfilePicture', ProfilePicture);
+                
+                request.input('ProfilePicture', value.ProfilePicture);
             }
 
             request.input('UserId', UserId);
