@@ -7,8 +7,8 @@ import SearchIcon from "@material-ui/icons/Search";
 import NotificationsNoneIcon from "@material-ui/icons/NotificationsNone";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 import SettingsIcon from "@material-ui/icons/Settings";
-
-import { Button } from "@material-ui/core";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 function Sidebar({ onComponentClick }) {
   const [activeComponent, setActiveComponent] = useState("");
@@ -16,6 +16,12 @@ function Sidebar({ onComponentClick }) {
   const handleComponentClick = (component) => {
     setActiveComponent(component);
     onComponentClick(component);
+  };
+
+  const handleLogoutClick = () => {
+    // Handle the logout action here
+    // Implement the logic to log out the user
+    console.log("Logout clicked");
   };
 
   return (
@@ -46,7 +52,6 @@ function Sidebar({ onComponentClick }) {
         text="Profile"
         onClick={() => handleComponentClick("profile")}
       />
-
       <SidebarOption
         isActive={activeComponent === "settings"}
         Icon={SettingsIcon}
@@ -54,10 +59,19 @@ function Sidebar({ onComponentClick }) {
         onClick={() => handleComponentClick("settings")}
       />
 
-      {/* Button -> Tweet */}
-      <Button variant="outlined" className="sidebar__tweet" fullWidth>
-        Post
-      </Button>
+      <SidebarOption
+        isActive={activeComponent === "follow"}
+        Icon={PersonAddIcon}
+        text="Follow"
+        onClick={() => handleComponentClick("follow")}
+      />
+
+      <SidebarOption
+        isActive={activeComponent === "Logout"}
+        Icon={ExitToAppIcon}
+        text="Logout"
+        onClick={() => handleComponentClick("Logout")}
+      />
     </div>
   );
 }

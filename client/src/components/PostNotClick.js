@@ -3,21 +3,46 @@ import "./Post.css";
 import { Avatar } from "@material-ui/core";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 import { FaPlay, FaPause, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import axios from "axios";
 
-const Post = forwardRef(({ post  }, ref) => {
- 
+const Post = forwardRef(({ post }, ref) => {
+  
   const [comment, setComment] = useState("");
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [isLiked, setIsLiked] = useState(); // Track the like status
   const videoRef = useRef(null);
+  const [likeCount, setLikeCount] = useState(post.LikeCount);
+  const [commentCount, setCommentCount] = useState(post.CommentCount);
 
   const imageUrls = post.ImageUrls?.split(",") || [];
   const videoUrls = post.VideoUrls?.split(",") || [];
+
+  const checkLike = async () => {
+    const data = {
+      PostId: post.PostId,
+    }
+    try {
+      const response = await axios.post(
+        "http://localhost:5051/checkLike",
+        data,
+        { withCredentials: true }
+      );
+      console.log(response.data.response)
+      console.log(isLiked);
+      setIsLiked(response.data.response)
+    } catch (error) { }
+  };
+
+  useEffect(() => {
+
+    checkLike();
+
+  });
 
   const handleCommentChange = (event) => {
     setComment(event.target.value);
@@ -25,21 +50,25 @@ const Post = forwardRef(({ post  }, ref) => {
 
   const handleCommentSubmit = async (event) => {
     event.preventDefault();
-    console.log(comment);
-    const PostId = post.PostId
+    const PostId = post.PostId;
     console.log(comment);
     const data = {
       PostId: PostId,
       Content: comment,
     };
-    console.log(data)
+    console.log(data);
 
-    const response = await axios.post("http://localhost:5051/commentOnPost", data, {
-      withCredentials: true
-    }
-    )
-    console.log(response)
+    const response = await axios.post(
+      "http://localhost:5051/commentOnPost",
+      data,
+      {
+        withCredentials: true,
+      }
+    );
+    console.log(response);
+
     setComment("");
+    setCommentCount(commentCount + 1)
   };
 
   const handleCommentIconClick = () => {
@@ -64,6 +93,32 @@ const Post = forwardRef(({ post  }, ref) => {
 
   const handleSoundToggle = () => {
     setIsMuted(!isMuted);
+  };
+
+  const handleLikeClick = async () => {
+    const PostId = { PostId: post.PostId };
+    console.log(PostId)
+
+    try {
+
+      const response = await axios.post(
+        `http://localhost:5051/likePost`,
+        PostId,
+        {
+          withCredentials: true,
+        }
+      );
+
+      setIsLiked(!isLiked);
+      if(isLiked){
+        setLikeCount(likeCount - 1) 
+      }else{
+        setLikeCount(likeCount + 1) 
+      }
+      // Toggle the like status
+    } catch (error) {
+      console.error("Error liking/unliking post:", error);
+    }
   };
 
   useEffect(() => {
@@ -94,7 +149,7 @@ const Post = forwardRef(({ post  }, ref) => {
         <Avatar src={post.ProfilePicture} />
       </div>
       <div className="post__body">
-        <div className="post__header">
+        <div className="post__header" >
           <div className="post__headerText">
             <h3>
               {post.User}{" "}
@@ -127,13 +182,10 @@ const Post = forwardRef(({ post  }, ref) => {
                 onMouseEnter={handleVideoHover}
                 onMouseLeave={handleVideoHover}
               >
-                <video
-                  src={url}
-                  ref={videoRef}
-                  muted={isMuted}
-                />
+                <video src={url} ref={videoRef} muted={isMuted} />
                 {isHovered && (
-                  <div className="video-overlay">
+                  <>
+                   <div className="video-overlay">
                     {isPlaying ? (
                       <FaPause
                         className="play-pause-icon"
@@ -146,9 +198,8 @@ const Post = forwardRef(({ post  }, ref) => {
                       />
                     )}
                   </div>
-                )}
-                <div className="mute-button">
-                  
+
+                  <div className="mute-button">
                   {isMuted ? (
                     <FaVolumeMute
                       className="volume-icon"
@@ -161,17 +212,27 @@ const Post = forwardRef(({ post  }, ref) => {
                     />
                   )}
                 </div>
+                  </>
+                 
+                  
+                )}
+               
               </div>
             ))}
           </div>
         )}
 
         <div className="post__footer">
-        <div className="chat">
-          <ChatBubbleOutlineIcon fontSize="medium" onClick={handleCommentIconClick} /><span>{post.CommentCount}</span>
+          <div className="chat">
+            <ChatBubbleOutlineIcon
+              fontSize="medium"
+              onClick={handleCommentIconClick}
+            />
+            <span>{commentCount}</span>
           </div>
-          <div className="like">
-          <FavoriteBorderIcon fontSize="medium" /><span>{post.LikeCount}</span>
+          <div className={`like ${isLiked ? "liked" : ""}`} onClick={handleLikeClick}>
+            <FavoriteIcon fontSize="medium" className="icon"  />
+            <span>{likeCount}</span>
           </div>
         </div>
 
@@ -183,6 +244,7 @@ const Post = forwardRef(({ post  }, ref) => {
                 type="text"
                 placeholder="Write a comment..."
                 value={comment}
+                required
                 onChange={handleCommentChange}
               />
               <button type="submit">Post</button>

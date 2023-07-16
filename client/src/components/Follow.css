@@ -1,0 +1,44 @@
+.container{
+    box-sizing: border-box;
+    margin-bottom: 2%;
+}
+.user-card {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f5f5f5;
+    justify-content: space-between;
+    margin: 3% 10% 2% 3%;
+    border-radius: 10px;
+    
+  }
+
+  .user-details{
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-card__info {
+    margin-left: 10px;
+  }
+  
+  .user-card__info h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .verified-icon {
+    color: var(--twitter-color);
+  }
+  
+  .follow-button {
+    margin-left: auto;
+    background-color: var(--lighter)!important;
+  }
+  .follow-button:hover {
+    background-color: var(--twitter-color)!important;
+    color: white;
+  }
+  

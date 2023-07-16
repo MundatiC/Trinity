@@ -290,6 +290,29 @@ async function likeComment(req, res){
 
 }
 
+async function checkLike(req, res) {
+    try {
+      const { pool } = req;
+      if (pool.connected) {
+        const { PostId } = req.body;
+        const UserID = req.session?.user.UserId;
+        let response = await pool
+          .request()
+          .input("PostId", PostId)
+          .input("UserId", UserID)
+          .execute("GetLikesByPostAndUser");
+        res.status(200).json({
+          success: true,
+          message: "Post liked",
+          response: response.recordset.length,
+        });
+      }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+  }
+
 async function searchByUsername(req,res){
     
     const username   = req.params.term;
@@ -317,4 +340,4 @@ async function searchByUsername(req,res){
 
 
 
-module.exports = { getFeed, getUserPosts, createPost, getPost,deletePost, likePost, commentOnPost,getRepliesForComment, likeComment, replytoComment, searchByUsername };
+module.exports = { getFeed, getUserPosts, createPost, getPost,deletePost, likePost, commentOnPost,getRepliesForComment, likeComment, checkLike ,replytoComment, searchByUsername };
