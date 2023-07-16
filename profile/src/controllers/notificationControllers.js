@@ -36,6 +36,7 @@ async function getNotifications(req,res){
 async function markNotificationsAsRead(req,res){
     const UserId = req.session?.user.UserId
     const { pool } = req
+    console.log(UserId)
 
     try {
         if(pool.connected){
@@ -49,7 +50,7 @@ async function markNotificationsAsRead(req,res){
 
                 res.json({
                     success: true,
-                    message: "Successfully marked your notifications as read",
+                    message: "Successfully marked all  your notifications as read",
                     data: result.recordset
                 });
                   
@@ -66,6 +67,39 @@ async function markNotificationsAsRead(req,res){
 
 }
 
+async function markSingleNotificationAsRead(req, res){
+    
+    const { pool } = req
+    const NotificationId = req.body.NotificationId
+
+    try {
+        if(pool.connected){
+            const request = pool.request()
+            request.input('NotificationId', NotificationId);
+
+            let result = await request.execute('MarkNotificationSingleAsRead');
+            console.log(result);
+
+          
+
+                res.json({
+                    success: true,
+                    message: "Successfully marked your notification as read",
+                    data: result.recordset
+                });
+                  
+                
+            
+
+           
+
+        }
+    } catch (error) {
+        res.send(error.message)
+        
+    }
+}
 
 
-module.exports = {getNotifications, markNotificationsAsRead}
+
+module.exports = {getNotifications, markNotificationsAsRead, markSingleNotificationAsRead}

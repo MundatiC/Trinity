@@ -145,6 +145,37 @@ async function getLikedPosts(req, res){
   }
 }
 
+async function getUser(req,res){
+  const UserId = req.session?.user.UserId
+  const { pool } = req
+
+  try {
+    if(pool.connected){
+      const request = pool.request()
+      request.input('UserId', UserId);
+
+      let result = await request.execute('GetUserById');
+      console.log(result);
+
+      if(result.rowsAffected[0]>0){
+
+          res.json({
+              success: true,
+              message: "Successfully retreived your user profile",
+              data: result.recordset
+          });
+          
+
+          
+
+          
+      }
+    }
+  } catch (error) {
+    res.send(error.message)
+  }
+}
+
 
 
 
@@ -154,4 +185,4 @@ async function getLikedPosts(req, res){
 
   
 
-module.exports = {editProfile, showProfile,changePassword, getLikedPosts}
+module.exports = {editProfile, showProfile,changePassword, getLikedPosts, getUser}
