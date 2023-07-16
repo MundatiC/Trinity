@@ -1,0 +1,83 @@
+.notifications {
+    background-color: #f5f8fa;
+    padding: 20px;
+    overflow-y: scroll;
+  }
+  .notifications::-webkit-scrollbar {
+    display: none;
+  }
+  
+  
+  .notifications__title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .notification {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .notification__content {
+    flex: 1;
+  }
+  
+  .notification__text {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  .notification__timestamp {
+    font-size: 12px;
+    color: #657786;
+  }
+  
+  .notification__details {
+    display: flex;
+    align-items: center;
+  }
+  
+  .notification__type {
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .notification__profile-picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .notification__username {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .notification__divider {
+    border: none;
+    border-top: 1px solid #e6ecf0;
+    margin-top: 10px;
+  }
+  
+  .notification.unread {
+    background-color: #c5def1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .notification.unread .notification__text {
+    font-weight: bold;
+  }
+  
+  .notification.unread .notification__type {
+    color: var(--twitter-color);
+  }
+  
+  

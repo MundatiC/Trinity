@@ -1,3 +1,11 @@
+.search{
+    box-sizing: border-box;
+    padding: 4%;
+}
+
+.results{
+    padding: 6%;
+}
 input {
     width: 100%;
     padding: 8px;
@@ -37,11 +45,10 @@ input {
     position: absolute;
     bottom: -2px;
     right: -2px;
-    color: #1da1f2;
-    background-color: #fff;
+    color: var(--twitter-color);
     border-radius: 50%;
     padding: 2px;
-    font-size: 12px;
+  
   }
   
   .username {

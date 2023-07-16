@@ -24,20 +24,25 @@ function Search() {
   };
 
   return (
-    <div>
-      <input type="text" value={searchTerm} onChange={handleSearchChange} placeholder="Search" />
+    <div className='search'>
+       <input type="text" value={searchTerm} onChange={handleSearchChange} placeholder="Search" />
+     <div className='results'>
+    
 
-      <ul className="search-results">
-        {searchResults.map((result) => (
-          <li key={result.UserID} className="search-result">
-            <div className="avatar-container">
-              <Avatar src={result.ProfilePicture} alt={result.UserName} />
-              <VerifiedUserIcon className="verified-icon" />
-            </div>
-            <span className="username">{result.UserName}</span>
-          </li>
-        ))}
-      </ul>
+<ul className="search-results">
+  {searchResults.map((result) => (
+    <li key={result.UserID} className="search-result">
+      <div className="avatar-container">
+        <Avatar src={result.ProfilePicture} alt={result.UserName} />
+        <VerifiedUserIcon 
+        fontSize='small'
+        className="verified-icon" />
+      </div>
+      <span className="username">{result.UserName}</span>
+    </li>
+  ))}
+</ul>
+     </div>
     </div>
   );
 }

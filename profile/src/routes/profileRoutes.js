@@ -2,7 +2,7 @@ const express = require('express')
 
 const profileRouter = express.Router();
 
-const { editProfile, showProfile,changePassword, getLikedPosts} = require("../controllers/profileControllers")
+const { editProfile, showProfile,changePassword, getLikedPosts, getUser} = require("../controllers/profileControllers")
 const {sessionAuthorization} = require("../middlewares/sessionAuthorization")
 
 profileRouter.use(sessionAuthorization)
@@ -13,7 +13,9 @@ profileRouter.get("/showProfile", showProfile )
 
 profileRouter.get("/getLikedPosts", getLikedPosts)
 
-profileRouter.post("/changePassword", changePassword)
+profileRouter.put("/changePassword", changePassword)
+
+profileRouter.get("/getUser", getUser )
 
 
 
