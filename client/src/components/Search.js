@@ -36,7 +36,8 @@ function Search() {
         <Avatar src={result.ProfilePicture} alt={result.UserName} />
         <VerifiedUserIcon 
         fontSize='small'
-        className="verified-icon" />
+        className="verified-icon" 
+       />
       </div>
       <span className="username">{result.UserName}</span>
     </li>

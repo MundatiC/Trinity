@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Avatar } from '@material-ui/core';
-import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import './Comments.css';
@@ -14,6 +13,7 @@ function Comments({ post }) {
   const [replyContent, setReplyContent] = useState('');
   const [replies, setReplies] = useState({});
   const [showReplies, setShowReplies] = useState(false);
+ 
 
   useEffect(() => {
     const fetchComments = async () => {

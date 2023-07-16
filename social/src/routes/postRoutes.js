@@ -2,7 +2,7 @@ const express = require("express");
 
 const postRouter = express.Router();
 
-const { getFeed, getUserPosts, createPost, getPost,deletePost, likePost, getRepliesForComment, commentOnPost, likeComment, replytoComment, searchByUsername } = require("../controllers/postControllers");
+const { getFeed, getUserPosts, createPost, getPost,deletePost, likePost, getRepliesForComment, commentOnPost, likeComment, checkLike, replytoComment, searchByUsername } = require("../controllers/postControllers");
 
 const { sessionAuthorization } = require("../middlewares/sessionAuthorization");
 
@@ -30,6 +30,8 @@ postRouter.post("/replytoComment", replytoComment)
 postRouter.put("/deletePost", deletePost)
 
 postRouter.get("/search/:term", searchByUsername)
+
+postRouter.post("/checkLike", checkLike)
 
 
 

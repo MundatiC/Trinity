@@ -45,7 +45,7 @@ input {
     position: absolute;
     bottom: -2px;
     right: -2px;
-    color: var(--twitter-color);
+    color: var(--twitter-color)!important;
     border-radius: 50%;
     padding: 2px;
   

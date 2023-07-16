@@ -4,12 +4,10 @@ import { Avatar, Button } from "@material-ui/core";
 import PhotoIcon from "@material-ui/icons/Photo";
 import VideoLibraryIcon from "@material-ui/icons/VideoLibrary";
 import axios from "axios";
-import { ToastContainer,toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
-
-function TweetBox() {
+function TweetBox({ onPost }) {
   const [tweetMessage, setTweetMessage] = useState("");
   const [tweetImage, setTweetImage] = useState(null);
   const [tweetVideo, setTweetVideo] = useState(null);
@@ -17,7 +15,6 @@ function TweetBox() {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setTweetImage(file);
-    console.log('first')
   };
 
   const handleVideoChange = (e) => {
@@ -52,28 +49,30 @@ function TweetBox() {
         videoData
       );
       videoUploadUrl = response.data.secure_url;
-      console.log(videoUploadUrl)
     }
 
-    // Make API call to your endpoint
+    // Make API call to create post
     const data = {
       Content: tweetMessage,
       ImageUrls: imageUploadUrl,
       VideoUrls: videoUploadUrl,
     };
-    const response = await axios.post(
-      "http://localhost:5051/createPost",
-      data,
-      {
-        withCredentials: true,
-      }
-    );
 
-    if (response.status === 200) {
-     
-      toast.success("Post created successfully!");
-    } else {
-      toast.error("Failed to create post.");
+    try {
+      const response = await axios.post("http://localhost:5051/createPost", data, {
+        withCredentials: true,
+      });
+
+      if (response.status === 200) {
+        // Call the onPost callback function to notify the parent component (Feed) about the new post
+        onPost(response.data.data);
+        toast.success("Post created successfully!");
+      } else {
+        toast.error("Failed to create post.");
+      }
+    } catch (error) {
+      console.error("Error creating post:", error);
+      toast.error("Failed to create post. Please try again.");
     }
 
     // Reset state
@@ -84,8 +83,8 @@ function TweetBox() {
 
   return (
     <div className="tweetBox">
-      <ToastContainer/>
-      
+      <ToastContainer />
+
       <form onSubmit={sendTweet}>
         <div className="tweetBox__input">
           <Avatar src="https://res.cloudinary.com/trinity-social/image/upload/v1689102278/kf3bjc6u5frthpjsbscs.jpg" />
@@ -123,13 +122,12 @@ function TweetBox() {
         </div>
 
         <Button
-      type="submit"
-      className="tweetBox__tweetButton"
-      disabled={tweetMessage.length === 0}
-    >
+          type="submit"
+          className="tweetBox__tweetButton"
+          disabled={tweetMessage.length === 0}
+        >
           Post
         </Button>
-        
       </form>
     </div>
   );
