@@ -184,7 +184,7 @@ const Post = forwardRef(({ post, onClick }, ref) => {
                 onMouseEnter={handleVideoHover}
                 onMouseLeave={handleVideoHover}
               >
-                <video src={url} ref={videoRef} muted={isMuted} />
+                <video src={url} ref={videoRef} muted={isMuted}  />
                 {isHovered && (
                   <>
                    <div className="video-overlay">

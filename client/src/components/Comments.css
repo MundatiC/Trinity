@@ -25,6 +25,10 @@
     flex-direction: row;
     gap: 0.3em;
     }
+
+    .liked {
+      color: var(--twitter-color) !important;
+    }
   
   .comment__headerDescription {
     margin-bottom: 10px;

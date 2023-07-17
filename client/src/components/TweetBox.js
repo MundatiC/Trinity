@@ -7,7 +7,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function TweetBox({ onPost }) {
+function TweetBox() {
   const [tweetMessage, setTweetMessage] = useState("");
   const [tweetImage, setTweetImage] = useState(null);
   const [tweetVideo, setTweetVideo] = useState(null);
@@ -64,8 +64,9 @@ function TweetBox({ onPost }) {
       });
 
       if (response.status === 200) {
+        console.log(response.data.data)
         // Call the onPost callback function to notify the parent component (Feed) about the new post
-        onPost(response.data.data);
+       
         toast.success("Post created successfully!");
       } else {
         toast.error("Failed to create post.");

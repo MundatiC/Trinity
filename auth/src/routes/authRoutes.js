@@ -19,7 +19,7 @@ authRouter.post("/register", newUserMiddleware, registerUser)
 authRouter.post("/login", loginUser)
 
 authRouter.use(sessionAuthorization)
-authRouter.post("/logout", logoutUser)
+authRouter.get("/logout", logoutUser)
 
 authRouter.post("/deleteAccount", deleteAccount)
 
