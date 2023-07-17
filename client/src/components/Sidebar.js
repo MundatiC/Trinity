@@ -67,10 +67,10 @@ function Sidebar({ onComponentClick }) {
       />
 
       <SidebarOption
-        isActive={activeComponent === "Logout"}
+        isActive={activeComponent === "logout"}
         Icon={ExitToAppIcon}
         text="Logout"
-        onClick={() => handleComponentClick("Logout")}
+        onClick={() => handleComponentClick("logout")}
       />
     </div>
   );

@@ -10,6 +10,7 @@ import Settings from './Settings';
 import PostDetails from './PostDetails';
 import Footer from './Footer';
 import Follow from './Follow';
+import Logout from './Logout';
 
 export const Home = () => {
   const [activeComponent, setActiveComponent] = useState('feed');
@@ -46,6 +47,8 @@ export const Home = () => {
           <PostDetails post={activePost} />
         ) : activeComponent === 'follow' ? (
           <Follow />
+        ) : activeComponent === 'logout' ? (
+          <Logout />
         ) : null}
       </div>
       <div className="third-section">
