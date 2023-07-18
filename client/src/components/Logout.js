@@ -34,7 +34,7 @@ const Logout = () => {
      
         <div className="logout-component">
         <ToastContainer />
-          <h1>Logout of SocialVerse</h1>
+          <h1>Logout of Trinity</h1>
           <p>
             Are you sure you want to log out of your account? <br />
             You will be able to log back in whenever you want.
