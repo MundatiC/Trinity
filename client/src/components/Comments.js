@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Comment from './Comment'; // Import the new Comment component
+import Comment from './Comment';
 import './Comments.css';
 
 function Comments({ post }) {
@@ -9,17 +9,19 @@ function Comments({ post }) {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get(`http://localhost:5051/post/${post.PostId}`, {
-          withCredentials: true,
-        });
-        setComments(response.data.comments);
+        if (post) {
+          const response = await axios.get(`http://localhost:5051/post/${post.PostId}`, {
+            withCredentials: true,
+          });
+          setComments(response.data.comments);
+        }
       } catch (error) {
         console.error('Error fetching comments:', error);
       }
     };
 
     fetchComments();
-  }, [post.PostId]);
+  }, [post]);
 
   return (
     <>

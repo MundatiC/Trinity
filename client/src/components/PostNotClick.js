@@ -39,10 +39,9 @@ const Post = forwardRef(({ post }, ref) => {
   };
 
   useEffect(() => {
-
     checkLike();
-
-  });
+  }, [post.PostId]);
+  
 
   const handleCommentChange = (event) => {
     setComment(event.target.value);

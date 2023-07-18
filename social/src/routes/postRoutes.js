@@ -11,7 +11,7 @@ postRouter.use(sessionAuthorization)
 
 postRouter.get("/feed", getFeed);
 
-postRouter.get('/myposts', getUserPosts)
+postRouter.get('/myposts/:id', getUserPosts)
 
 postRouter.post("/createPost", createPost);
 

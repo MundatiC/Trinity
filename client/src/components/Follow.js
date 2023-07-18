@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Avatar, Button } from '@material-ui/core';
 import './Follow.css'
 
-function Follow() {
+function Follow({onSearchResultClick}) {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -21,6 +21,10 @@ function Follow() {
     }
   };
 
+  const handleClick = (user) => {
+    onSearchResultClick(user.UserId)
+  }
+
   const handleFollow = async (userId) => {
     const data = {
         FollowerUserId: userId
@@ -36,7 +40,7 @@ function Follow() {
     <div className='container'>
       <h1>Users to Follow</h1>
       {users.map((user) => (
-        <div key={user.id} className="user-card">
+        <div key={user.UserId} className="user-card" onClick={() => handleClick( user )}>
             <div className='user-details'>
           <Avatar src={user.ProfilePicture} alt="" />
           <div className="user-card__info">
