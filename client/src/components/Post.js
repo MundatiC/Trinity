@@ -41,10 +41,9 @@ const Post = forwardRef(({ post, onClick }, ref) => {
   };
 
   useEffect(() => {
-
     checkLike();
-
-  });
+  }, [post.PostId]);
+  
 
   const handleCommentChange = (event) => {
     setComment(event.target.value);
@@ -125,25 +124,26 @@ const Post = forwardRef(({ post, onClick }, ref) => {
 
   useEffect(() => {
     const videoElement = videoRef.current;
-
+  
     if (videoElement) {
       const handlePlay = () => {
         setIsPlaying(true);
       };
-
+  
       const handlePause = () => {
         setIsPlaying(false);
       };
-
+  
       videoElement.addEventListener("play", handlePlay);
       videoElement.addEventListener("pause", handlePause);
-
+  
       return () => {
         videoElement.removeEventListener("play", handlePlay);
         videoElement.removeEventListener("pause", handlePause);
       };
     }
   }, []);
+  
 
   return (
     <div className="post" ref={ref}>

@@ -4,7 +4,7 @@ import { Avatar } from '@material-ui/core';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import './Search.css'
 
-function Search() {
+function Search({onSearchResultClick}) {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
@@ -23,6 +23,10 @@ function Search() {
     }
   };
 
+  const handleClick = (userId) => {
+    onSearchResultClick(userId)
+  }
+
   return (
     <div className='search'>
        <input type="text" value={searchTerm} onChange={handleSearchChange} placeholder="Search" />
@@ -31,7 +35,8 @@ function Search() {
 
 <ul className="search-results">
   {searchResults.map((result) => (
-    <li key={result.UserID} className="search-result">
+    <li key={result.UserID} className="search-result"
+    onClick={() => handleClick( result.UserID)}>
       <div className="avatar-container">
         <Avatar src={result.ProfilePicture} alt={result.UserName} />
         <VerifiedUserIcon 

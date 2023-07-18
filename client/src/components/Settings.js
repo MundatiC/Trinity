@@ -105,17 +105,21 @@ function Settings() {
 
       // Update password
       if (newPassword && newPassword === confirmPassword) {
-        await axios.put('http://localhost:5052/changePassword', {
+        const response = await axios.put('http://localhost:5052/changePassword', {
           currentPassword,
           newPassword,
         },{
             withCredentials: true
         });
-        setSuccessMessage('Settings updated successfully!');
+        if(response.status === 200){
+          setSuccessMessage('Settings updated successfully!');
+        } else{
+          setErrorMessage('Password do not match');
+        }
+        
+        
       }
-      else{
-        setErrorMessage('Incorrect password or password did not match. Please try again.');
-      }
+      
 
       setConfirmPassword('');
       setCurrentPassword('');

@@ -47,10 +47,10 @@ function Sidebar({ onComponentClick }) {
         onClick={() => handleComponentClick("notifications")}
       />
       <SidebarOption
-        isActive={activeComponent === "profile"}
+        isActive={activeComponent === "mainprofile"}
         Icon={PermIdentityIcon}
         text="Profile"
-        onClick={() => handleComponentClick("profile")}
+        onClick={() => handleComponentClick("mainprofile")}
       />
       <SidebarOption
         isActive={activeComponent === "settings"}

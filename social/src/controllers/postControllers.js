@@ -32,7 +32,7 @@ async function getFeed(req, res) {
 }
 
 async function getUserPosts(req, res) {
-    const UserId = req.session?.user.UserId
+    const UserId = req.params.id
     const { pool } = req
     try {
       

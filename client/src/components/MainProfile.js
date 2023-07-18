@@ -4,7 +4,7 @@ import FlipMove from 'react-flip-move';
 import Post from './Post';
 import axios from 'axios';
 
-const Profile = ({ onPostClick, UserId }) => {
+const MainProfile = ({ onPostClick, UserId }) => {
   const [profileData, setProfileData] = useState({});
   const [likedPosts, setLikedPosts] = useState([]);
   const [myPosts, setMyPosts] = useState([]);
@@ -102,4 +102,4 @@ const Profile = ({ onPostClick, UserId }) => {
   );
 };
 
-export default Profile;
+export default MainProfile;

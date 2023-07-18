@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Avatar } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -7,66 +7,60 @@ import ReplyIcon from '@material-ui/icons/Reply';
 import './Comments.css';
 
 function Comment({ comment }) {
-    const [showReplyInput, setShowReplyInput] = useState(false);
-    const [replyCommentId, setReplyCommentId] = useState(null);
-    const [replyContent, setReplyContent] = useState('');
-    const [replies, setReplies] = useState({});
-    const [showReplies, setShowReplies] = useState(false);
-    const [replyCount, setReplyCount] = useState(comment.ReplyCount);
-    const [likeCount, setLikeCount] = useState(comment.LikeCount);
-    const [liked, setLiked] = useState(false);
-  
+  const [showReplyInput, setShowReplyInput] = useState(false);
+  const [replyCommentId, setReplyCommentId] = useState(null);
+  const [replyContent, setReplyContent] = useState('');
+  const [replies, setReplies] = useState([]);
+  const [showReplies, setShowReplies] = useState(false);
+  const [replyCount, setReplyCount] = useState(comment.ReplyCount);
+  const [likeCount, setLikeCount] = useState(comment.LikeCount);
+  const [liked, setLiked] = useState(false);
+
   const handleLikeClick = async (commentId) => {
     try {
-      const response = await axios.post(
+      await axios.post(
         `http://localhost:5051/likeComment`,
         { CommentId: commentId },
         {
           withCredentials: true,
         }
       );
-        console.log(response)
-        setLiked(!liked);
-        if (liked) {
-            setLikeCount(likeCount - 1);
-        } else {
-            setLikeCount(likeCount + 1);
-        }
+
+      setLiked(!liked);
+      setLikeCount((prevCount) => (liked ? prevCount - 1 : prevCount + 1));
+
     } catch (error) {
       console.error('Error liking comment:', error);
     }
   };
 
-
   const checkLiked = async () => {
     try {
-        const data = {
-            CommentId: comment.CommentId,
-        }
+      const data = {
+        CommentId: comment.CommentId,
+      };
       const response = await axios.post(`http://localhost:5051/checkLikeComment`, data, {
         withCredentials: true,
       });
-      console.log(response)
-      setLiked(response.data.response) 
+      setLiked(response.data.response);
     } catch (error) {
       console.error('Error fetching replies:', error);
     }
-  }
+  };
 
   useEffect(() => {
-
     checkLiked();
-
-  });
+  }, []);
 
   const handleRepliesButtonClick = async (commentId) => {
     try {
-      const response = await axios.get(`http://localhost:5051/replies/${commentId}`, {
-        withCredentials: true,
-      });
-      console.log(response)
+      if (!showReplies) {
+        const response = await axios.get(`http://localhost:5051/replies/${commentId}`, {
+          withCredentials: true,
+        });
+        setReplies(response.data.data || []);
+      }
 
-      setReplies(response.data.data || []) 
       setShowReplies(!showReplies);
     } catch (error) {
       console.error('Error fetching replies:', error);
@@ -102,89 +96,90 @@ function Comment({ comment }) {
   };
 
   return (
-    <div  className="comment">
-    <div className="comment__avatar">
-      <Avatar src={comment.ProfilePicture} />
-    </div>
-    <div className="comment__body">
-      <div className="comment__header">
-        <div className="comment__headerText">
-          <h3>
-            {comment.Username}{' '}
-            {comment.Username && (
-              <span className="comment__headerSpecial">
-                <VerifiedUserIcon className="comment__badge" /> @{comment.Username}
-              </span>
-            )}
-          </h3>
-        </div>
-        <div className="comment__headerDescription">
-          <p>{comment.Content}</p>
-        </div>
+    <div className="comment">
+      <div className="comment__avatar">
+        <Avatar src={comment.ProfilePicture} />
       </div>
-      <div className="comment__footer">
-        <div className="reply">
-          <ReplyIcon fontSize="small" onClick={() => handleReplyClick(comment.CommentId)} />
-          <span>{replyCount}</span>
-        </div>
-
-        <div className="like">
-          <FavoriteIcon
-            fontSize="small"
-            className={` ${liked ? "liked" : ""}`}
-            onClick={() => handleLikeClick(comment.CommentId)}
-          />
-          <span>{likeCount}</span>
-        </div>
-      </div>
-
-      {/* Reply form */}
-      {showReplyInput && replyCommentId === comment.CommentId && (
-        <div className="reply-form">
-          <form onSubmit={handleReplySubmit}>
-            <input
-              type="text"
-              placeholder="Write a reply..."
-              value={replyContent}
-              onChange={(e) => setReplyContent(e.target.value)}
-              required
-            />
-            <button type="submit">Reply</button>
-          </form>
-        </div>
-      )}
-
-      {/* Display replies */}
-      {showReplies &&( replies.map((reply) => (
-        <div key={reply.ReplyId} className="comment reply-comment">
-          <div className="comment__avatar">
-            <Avatar src={reply.ProfilePicture} />
+      <div className="comment__body">
+        <div className="comment__header">
+          <div className="comment__headerText">
+            <h3>
+              {comment.Username}{' '}
+              {comment.Username && (
+                <span className="comment__headerSpecial">
+                  <VerifiedUserIcon className="comment__badge" /> @{comment.Username}
+                </span>
+              )}
+            </h3>
           </div>
-          <div className="comment__body">
-            <div className="comment__header">
-              <div className="comment__headerText">
-                <h3>
-                  {reply.User}{' '}
-                  {reply.User && (
-                    <span className="comment__headerSpecial">
-                      <VerifiedUserIcon className="comment__badge" /> @{reply.User}
-                    </span>
-                  )}
-                </h3>
+          <div className="comment__headerDescription">
+            <p>{comment.Content}</p>
+          </div>
+        </div>
+        <div className="comment__footer">
+          <div className="reply">
+            <ReplyIcon fontSize="small" onClick={() => handleReplyClick(comment.CommentId)} />
+            <span>{replyCount}</span>
+          </div>
+
+          <div className="like">
+            <FavoriteIcon
+              fontSize="small"
+              className={` ${liked ? 'liked' : ''}`}
+              onClick={() => handleLikeClick(comment.CommentId)}
+            />
+            <span>{likeCount}</span>
+          </div>
+        </div>
+
+        {/* Reply form */}
+        {showReplyInput && replyCommentId === comment.CommentId && (
+          <div className="reply-form">
+            <form onSubmit={handleReplySubmit}>
+              <input
+                type="text"
+                placeholder="Write a reply..."
+                value={replyContent}
+                onChange={(e) => setReplyContent(e.target.value)}
+                required
+              />
+              <button type="submit">Reply</button>
+            </form>
+          </div>
+        )}
+
+        {/* Display replies */}
+        {showReplies &&
+          replies.map((reply) => (
+            <div key={reply.ReplyId} className="comment reply-comment">
+              <div className="comment__avatar">
+                <Avatar src={reply.ProfilePicture} />
               </div>
-              <div className="comment__headerDescription">
-                <p>{reply.Content}</p>
+              <div className="comment__body">
+                <div className="comment__header">
+                  <div className="comment__headerText">
+                    <h3>
+                      {reply.User}{' '}
+                      {reply.User && (
+                        <span className="comment__headerSpecial">
+                          <VerifiedUserIcon className="comment__badge" /> @{reply.User}
+                        </span>
+                      )}
+                    </h3>
+                  </div>
+                  <div className="comment__headerDescription">
+                    <p>{reply.Content}</p>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      )))}
+          ))}
+      </div>
+      {/* Toggle button for replies */}
+      <button className="toggle-replies-button" onClick={() => handleRepliesButtonClick(comment.CommentId)}>
+        {showReplies ? 'Hide Replies' : 'Show Replies'}
+      </button>
     </div>
-    {/* Toggle button for replies */}
-    <button className="toggle-replies-button" onClick={() => handleRepliesButtonClick(comment.CommentId)}>
-      {replies[comment.CommentId] ? 'Hide Replies' : 'Show Replies'}
-    </button>
-  </div>
   );
 }
 
