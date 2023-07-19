@@ -6,11 +6,13 @@ import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { FaPlay, FaPause, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Post = forwardRef(({ post, onClick }, ref) => {
+  const navigate = useNavigate();
   const handlePostClick = () => {
-    onClick(post);
-  };
+   navigate(`/home/post/${post.PostId}`
+);};
   const [comment, setComment] = useState("");
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -151,7 +153,7 @@ const Post = forwardRef(({ post, onClick }, ref) => {
         <Avatar src={post.ProfilePicture} />
       </div>
       <div className="post__body">
-        <div className="post__header" onClick={handlePostClick}>
+        <div className="post__header" onClick={()=> handlePostClick(post.PostId)}>
           <div className="post__headerText">
             <h3>
               {post.User}{" "}

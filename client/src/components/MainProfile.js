@@ -3,8 +3,11 @@ import './Profile.css';
 import FlipMove from 'react-flip-move';
 import Post from './Post';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
-const MainProfile = ({ onPostClick, UserId }) => {
+const MainProfile = ({ onPostClick }) => {
+  const { UserId } = useParams();
+  console.log(UserId)
   const [profileData, setProfileData] = useState({});
   const [likedPosts, setLikedPosts] = useState([]);
   const [myPosts, setMyPosts] = useState([]);

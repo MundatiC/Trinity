@@ -3,14 +3,15 @@ import axios from 'axios';
 import Comment from './Comment';
 import './Comments.css';
 
-function Comments({ post }) {
+
+function Comments({ PostId }) {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        if (post) {
-          const response = await axios.get(`http://localhost:5051/post/${post.PostId}`, {
+        if (PostId) {
+          const response = await axios.get(`http://localhost:5051/post/${PostId}`, {
             withCredentials: true,
           });
           setComments(response.data.comments);
@@ -21,7 +22,7 @@ function Comments({ post }) {
     };
 
     fetchComments();
-  }, [post]);
+  }, [PostId]);
 
   return (
     <>

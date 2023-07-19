@@ -12,6 +12,7 @@ import Follow from './Follow';
 import Logout from './Logout';
 import axios from 'axios';
 import MainProfile from './MainProfile';
+import { Outlet } from 'react-router-dom';
 
 export const Home = () => {
   const [activeComponent, setActiveComponent] = useState('feed');
@@ -33,22 +34,7 @@ export const Home = () => {
     setActiveComponent('postDetails');
   };
 
-  useEffect(() => {
-    const fetchProfileData = async () => {
-      try {
-        const response = await axios.get('http://localhost:5052/getUser', {
-          withCredentials: true,
-        });
-        const { UserId } = response.data.data[0];
-        console.log(UserId);
-        setRealUserId(UserId);
-      } catch (error) {
-        console.error('Error fetching profile data:', error);
-      }
-    };
-
-    fetchProfileData();
-  }, []);
+ 
 
   const isSearchSelected = activeComponent === 'search';
 
@@ -58,29 +44,7 @@ export const Home = () => {
         <Sidebar onComponentClick={renderComponent} />
       </div>
       <div className="main-section">
-        {isSearchSelected ? (
-          <Search onSearchResultClick={handleSearchResultClick} />
-        ) : activeComponent === 'feed' ? (
-          <Feed onPostClick={handlePostClick} />
-        ) : activeComponent === 'notifications' ? (
-          <Notifications />
-        ) : activeComponent === 'profile' && selectedUserId ? (
-          <Profile
-            key={selectedUserId}
-            onPostClick={handlePostClick}
-            UserId={selectedUserId}
-          />
-        ) : activeComponent === 'mainprofile' ? (
-          <MainProfile onPostClick={handlePostClick} UserId={realUserId} />
-        ) : activeComponent === 'settings' ? (
-          <Settings />
-        ) : activeComponent === 'postDetails' ? (
-          <PostDetails post={activePost} />
-        ) : activeComponent === 'follow' ? (
-          <Follow onSearchResultClick={handleSearchResultClick} />
-        ) : activeComponent === 'logout' ? (
-          <Logout />
-        ) : null}
+       <Outlet/>
       </div>
       <div className="third-section">
         {isSearchSelected ? <Footer /> : <Search onSearchResultClick={handleSearchResultClick} />}
