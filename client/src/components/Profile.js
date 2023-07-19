@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './Profile.css';
+import { Avatar } from '@material-ui/core';
 import FlipMove from 'react-flip-move';
 import Post from './Post';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
-const Profile = ({ onPostClick, UserId }) => {
+const Profile = ({ onPostClick }) => {
+  const { UserId } = useParams();
   const [profileData, setProfileData] = useState({});
   const [likedPosts, setLikedPosts] = useState([]);
   const [myPosts, setMyPosts] = useState([]);
@@ -52,11 +55,8 @@ const Profile = ({ onPostClick, UserId }) => {
         <div className="profile-content">
           <div className="profile-header">
             <div className="profile-avatar">
-              {profileData.ProfilePicture ? (
-                <img src={profileData.ProfilePicture} alt="Avatar" />
-              ) : (
-                <i className="fa fa-user fa-5x" aria-hidden="true"></i>
-              )}
+              <Avatar src={profileData.ProfilePicture} alt={profileData.Name}
+               style={{ width: '100px', height: '100px' }}  />
             </div>
             <div className="profile-info">
               <h2>{profileData.Username}</h2>

@@ -24,4 +24,10 @@
   .sidebarOption--active {
     color: var(--twitter-color);
   }
+
+  .icon{
+    text-decoration: none;
+  }
+
+  
  

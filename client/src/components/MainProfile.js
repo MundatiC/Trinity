@@ -4,6 +4,7 @@ import FlipMove from 'react-flip-move';
 import Post from './Post';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { Avatar } from '@material-ui/core';
 
 const MainProfile = ({ onPostClick }) => {
   const { UserId } = useParams();
@@ -55,11 +56,8 @@ const MainProfile = ({ onPostClick }) => {
         <div className="profile-content">
           <div className="profile-header">
             <div className="profile-avatar">
-              {profileData.ProfilePicture ? (
-                <img src={profileData.ProfilePicture} alt="Avatar" />
-              ) : (
-                <i className="fa fa-user fa-5x" aria-hidden="true"></i>
-              )}
+            <Avatar src={profileData.ProfilePicture} alt={profileData.Name}
+               style={{ width: '100px', height: '100px' }}  />
             </div>
             <div className="profile-info">
               <h2>{profileData.Username}</h2>

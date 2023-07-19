@@ -42,7 +42,7 @@ function Sidebar({ onComponentClick }) {
   return (
     <div className="sidebar">
       <img src={TwitterIcon} alt="not" className="sidebar__twitterIcon" />
-      <Link to="/home/feed">
+      <Link to="/home/"  style={{ textDecoration:'none' }}>
       <SidebarOption
         isActive={activeComponent === "feed"}
         Icon={HomeIcon}
@@ -50,7 +50,7 @@ function Sidebar({ onComponentClick }) {
         onClick={() => handleComponentClick("feed")}
       />
       </Link>
-      <Link to="/home/search">
+      <Link to="/home/search"  style={{ textDecoration:'none' }}>
       <SidebarOption
         isActive={activeComponent === "search"}
         Icon={SearchIcon}
@@ -58,7 +58,7 @@ function Sidebar({ onComponentClick }) {
         onClick={() => handleComponentClick("search")}
       />
       </Link>
-      <Link to="/home/notifications">
+      <Link to="/home/notifications"  style={{ textDecoration:'none' }}>
       <SidebarOption
         isActive={activeComponent === "notifications"}
         Icon={NotificationsNoneIcon}
@@ -66,7 +66,7 @@ function Sidebar({ onComponentClick }) {
         onClick={() => handleComponentClick("notifications")}
       />
       </Link>
-      <Link to={`/home/profile/${realUserId}`}>
+      <Link to={`/home/profile/${realUserId}`}  style={{ textDecoration:'none' }}>
       <SidebarOption
         isActive={activeComponent === "mainprofile"}
         Icon={PermIdentityIcon}
@@ -74,7 +74,7 @@ function Sidebar({ onComponentClick }) {
         onClick={() => handleComponentClick("mainprofile")}
       />
       </Link>
-      <Link to="/home/settings">
+      <Link to="/home/settings"  style={{ textDecoration:'none' }}>
       <SidebarOption
         isActive={activeComponent === "settings"}
         Icon={SettingsIcon}
@@ -82,7 +82,7 @@ function Sidebar({ onComponentClick }) {
         onClick={() => handleComponentClick("settings")}
       />
       </Link>
-      <Link to="/home/follow">
+      <Link to="/home/follow"  style={{ textDecoration:'none' }}>
       <SidebarOption
         isActive={activeComponent === "follow"}
         Icon={PersonAddIcon}
@@ -90,7 +90,7 @@ function Sidebar({ onComponentClick }) {
         onClick={() => handleComponentClick("follow")}
       />
       </Link>
-      <Link to="/home/logout">
+      <Link to="/home/logout"  style={{ textDecoration:'none' }}>
       <SidebarOption
         isActive={activeComponent === "logout"}
         Icon={ExitToAppIcon}

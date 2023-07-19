@@ -3,8 +3,10 @@ import axios from 'axios';
 import { Avatar } from '@material-ui/core';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import './Search.css'
+import { useNavigate } from 'react-router-dom';
 
 function Search({onSearchResultClick}) {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
@@ -24,7 +26,7 @@ function Search({onSearchResultClick}) {
   };
 
   const handleClick = (userId) => {
-    onSearchResultClick(userId)
+    navigate(`/home/profiles/${userId}`)
   }
 
   return (
