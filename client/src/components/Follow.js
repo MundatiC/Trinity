@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Avatar, Button } from '@material-ui/core';
 import './Follow.css'
+import { useNavigate } from 'react-router-dom';
 
-function Follow({onSearchResultClick}) {
+function Follow() {
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -22,7 +24,7 @@ function Follow({onSearchResultClick}) {
   };
 
   const handleClick = (user) => {
-    onSearchResultClick(user.UserId)
+    navigate(`/home/profiles/${user.UserId}`)
   }
 
   const handleFollow = async (userId) => {
