@@ -7,8 +7,9 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import { FaPlay, FaPause, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import axios from "axios";
 
-const Post = forwardRef(({ post }, ref) => {
-  
+
+function PostNotClick  ( { PostId }) {
+  const [post, setPost] = useState({});
   const [comment, setComment] = useState("");
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -16,8 +17,38 @@ const Post = forwardRef(({ post }, ref) => {
   const [isMuted, setIsMuted] = useState(false);
   const [isLiked, setIsLiked] = useState(); // Track the like status
   const videoRef = useRef(null);
-  const [likeCount, setLikeCount] = useState(post.LikeCount);
-  const [commentCount, setCommentCount] = useState(post.CommentCount);
+  const [likeCount, setLikeCount] = useState();
+  const [commentCount, setCommentCount] = useState();
+
+  const getPost = async () => {
+    try {
+        const response = await axios.get(`http://localhost:5051/post/${PostId}`, {
+          withCredentials: true,
+        });
+        console.log(response.data.data[0])
+        setPost(response.data.data[0]);
+        setCommentCount(response.data.data[0].CommentCount)
+        setLikeCount(response.data.data[0].LikeCount)
+        console.log(post)
+        
+    } catch (error) {
+
+    }
+  }
+
+  useEffect(()=>{
+    getPost()
+  },[PostId])
+
+
+
+  console.log(likeCount)
+ 
+  //[post, setPost
+
+ 
+  
+
 
   const imageUrls = post.ImageUrls?.split(",") || [];
   const videoUrls = post.VideoUrls?.split(",") || [];
@@ -41,6 +72,8 @@ const Post = forwardRef(({ post }, ref) => {
   useEffect(() => {
     checkLike();
   }, [post.PostId]);
+
+  
   
 
   const handleCommentChange = (event) => {
@@ -143,7 +176,7 @@ const Post = forwardRef(({ post }, ref) => {
   }, []);
 
   return (
-    <div className="post" ref={ref}>
+    <div className="post" >
       <div className="post__avatar">
         <Avatar src={post.ProfilePicture} />
       </div>
@@ -253,6 +286,6 @@ const Post = forwardRef(({ post }, ref) => {
       </div>
     </div>
   );
-});
+};
 
-export default Post;
+export default PostNotClick;
