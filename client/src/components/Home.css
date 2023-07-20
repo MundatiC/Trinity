@@ -12,6 +12,18 @@
   z-index: 999;
 }
 
+.sidebar {
+ 
+  flex: 0.2;
+  /* min-width: 250px; */
+  margin-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.sidebar2{
+  display: none;
+}
+
 .awesome {
   display: flex;
   height: 100vh;
@@ -42,9 +54,21 @@
 }
 
 /* Media query to hide sidebar in mobile view */
+@media (max-width: 968px) {
+  .third-section {
+    display: none;
+  }
+  
+
+}
 @media (max-width: 768px) {
   .sidebar {
     display: none;
+  }
+  .sidebar2{
+    display: flex;
+    flex-direction: row;
+   height: auto;
   }
 
   .main-section {
@@ -53,12 +77,15 @@
   }
 
   .third-section {
-    flex: 1;
-    margin-left: 0;
-    border-right: none;
+    display: none;
   }
 
   .toggle-sidebar-button {
     display: block;
   }
+  .awesome{
+    display: flex;
+    flex-direction: column;
+  }
+  
 }
