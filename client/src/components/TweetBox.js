@@ -3,11 +3,12 @@ import "./TweetBox.css";
 import { Avatar, Button } from "@material-ui/core";
 import PhotoIcon from "@material-ui/icons/Photo";
 import VideoLibraryIcon from "@material-ui/icons/VideoLibrary";
+import CloseIcon from "@material-ui/icons/Close"; // For deselecting the file
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function TweetBox({refreshPosts}) {
+function TweetBox({ refreshPosts }) {
   const [tweetMessage, setTweetMessage] = useState("");
   const [tweetImage, setTweetImage] = useState(null);
   const [tweetVideo, setTweetVideo] = useState(null);
@@ -20,6 +21,14 @@ function TweetBox({refreshPosts}) {
   const handleVideoChange = (e) => {
     const file = e.target.files[0];
     setTweetVideo(file);
+  };
+
+  const clearImage = () => {
+    setTweetImage(null);
+  };
+
+  const clearVideo = () => {
+    setTweetVideo(null);
   };
 
   const sendTweet = async (e) => {
@@ -83,6 +92,7 @@ function TweetBox({refreshPosts}) {
     setTweetVideo(null);
   };
 
+  
   return (
     <div className="tweetBox">
       <ToastContainer />
@@ -99,28 +109,49 @@ function TweetBox({refreshPosts}) {
           />
         </div>
         <div className="tweetBox__options">
-          <label htmlFor="tweet-image" className="tweetBox__option">
-            <input
-              id="tweet-image"
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              style={{ display: "none" }}
-            />
-            <PhotoIcon className="tweetBox__optionIcon" />
-            <span>Add Image</span>
-          </label>
-          <label htmlFor="tweet-video" className="tweetBox__option">
-            <input
-              id="tweet-video"
-              type="file"
-              accept="video/*"
-              onChange={handleVideoChange}
-              style={{ display: "none" }}
-            />
-            <VideoLibraryIcon className="tweetBox__optionIcon" />
-            <span>Add Video</span>
-          </label>
+          {tweetImage ? (
+            <div className="selected-file">
+              <img
+                className="selected-image"
+                src={URL.createObjectURL(tweetImage)}
+                alt="Selected"
+              />
+              <CloseIcon onClick={clearImage} className="close-icon" />
+            </div>
+          ) : (
+            <label htmlFor="tweet-image" className="tweetBox__option">
+              <input
+                id="tweet-image"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                style={{ display: "none" }}
+              />
+              <PhotoIcon className="tweetBox__optionIcon" />
+              <span>Add Image</span>
+            </label>
+          )}
+
+          {tweetVideo ? (
+            <div className="selected-file">
+              <video className="selected-video" controls>
+                <source src={URL.createObjectURL(tweetVideo)} />
+              </video>
+              <CloseIcon onClick={clearVideo} className="close-icon" />
+            </div>
+          ) : (
+            <label htmlFor="tweet-video" className="tweetBox__option">
+              <input
+                id="tweet-video"
+                type="file"
+                accept="video/*"
+                onChange={handleVideoChange}
+                style={{ display: "none" }}
+              />
+              <VideoLibraryIcon className="tweetBox__optionIcon" />
+              <span>Add Video</span>
+            </label>
+          )}
         </div>
 
         <Button

@@ -32,7 +32,10 @@ function Comments({ PostId }) {
 
   return (
     <>
-       <PostNotClick PostId={PostId} refreshComments={refreshComments} />
+      <div className='sticky'>
+      <PostNotClick PostId={PostId} refreshComments={refreshComments} />
+      </div>
+       
       <h1>Comments</h1>
       <FlipMove>
       {comments.map((comment) => (

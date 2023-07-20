@@ -6,6 +6,7 @@ import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { FaPlay, FaPause, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 function PostNotClick  ( { PostId, refreshComments }) {
@@ -19,6 +20,7 @@ function PostNotClick  ( { PostId, refreshComments }) {
   const videoRef = useRef(null);
   const [likeCount, setLikeCount] = useState();
   const [commentCount, setCommentCount] = useState();
+  const navigate = useNavigate()
 
   const getPost = async () => {
     try {
@@ -176,8 +178,18 @@ function PostNotClick  ( { PostId, refreshComments }) {
     }
   }, []);
 
+  
+
+  // Function to handle going back
+  const handleGoBack = () => {
+   navigate(-1)
+  };
+
   return (
     <div className="post" >
+       <div className="back-icon" onClick={handleGoBack}>
+        <i className="fa fa-arrow-left"></i>
+      </div>
       <div className="post__avatar">
         <Avatar src={post.ProfilePicture} />
       </div>
