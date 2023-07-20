@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import Feed from './Feed';
 import './Home.css';
@@ -19,6 +19,11 @@ export const Home = () => {
   const [activePost, setActivePost] = useState(null);
   const [realUserId, setRealUserId] = useState(null);
   const [selectedUserId, setSelectedUserId] = useState(null);
+  const [showSidebar, setShowSidebar] = useState(true); // Add state to control sidebar visibility
+
+  const toggleSidebar = () => {
+    setShowSidebar(!showSidebar);
+  };
 
   const renderComponent = (componentName) => {
     setActiveComponent(componentName);
@@ -34,21 +39,25 @@ export const Home = () => {
     setActiveComponent('postDetails');
   };
 
- 
-
   const isSearchSelected = activeComponent === 'search';
 
   return (
     <div className="awesome">
-      <div className="sidebar">
-        <Sidebar onComponentClick={renderComponent} />
-      </div>
+      <button className="toggle-sidebar-button" onClick={toggleSidebar}>
+        {showSidebar ? 'Hide Sidebar' : 'Show Sidebar'}
+      </button>
+      {showSidebar && (
+        <div className="sidebar">
+          <Sidebar onComponentClick={renderComponent} />
+        </div>
+      )}
       <div className="main-section">
-       <Outlet/>
+        <Outlet />
       </div>
       <div className="third-section">
         {isSearchSelected ? <Footer /> : <Search onSearchResultClick={handleSearchResultClick} />}
       </div>
+      
     </div>
   );
 };

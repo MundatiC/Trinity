@@ -37,6 +37,7 @@ async function registerUser(req, res) {
         // } catch (error) {
         //   console.log(error);
         // }
+        console.log(`results`, results)
   
         if (results.rowsAffected[0] > 0) {
           // templating
@@ -65,7 +66,10 @@ async function registerUser(req, res) {
         }
       }
     } catch (error) {
-      res.send(error.message);
+      res.status(500).send({
+        success: false,
+        message: error.message,
+      });
     }
   }
 
@@ -90,7 +94,7 @@ async function registerUser(req, res) {
             req.session.authorized = true;
             req.session.user = user;
   
-            res.json({
+            res.status(200).json({
               success: true,
               message: "log in successful",
             });
