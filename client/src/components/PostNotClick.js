@@ -8,7 +8,7 @@ import { FaPlay, FaPause, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import axios from "axios";
 
 
-function PostNotClick  ( { PostId }) {
+function PostNotClick  ( { PostId, refreshComments }) {
   const [post, setPost] = useState({});
   const [comment, setComment] = useState("");
   const [showCommentInput, setShowCommentInput] = useState(false);
@@ -101,6 +101,7 @@ function PostNotClick  ( { PostId }) {
 
     setComment("");
     setCommentCount(commentCount + 1)
+    refreshComments()
   };
 
   const handleCommentIconClick = () => {

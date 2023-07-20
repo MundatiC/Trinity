@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Settings.css';
+import { toast, ToastContainer } from 'react-toastify';
 
 function Settings() {
   const [Username, setUsername] = useState('');
@@ -11,6 +12,7 @@ function Settings() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     fetchUserSettings();
@@ -58,6 +60,7 @@ function Settings() {
     event.preventDefault();
     setSuccessMessage('');
     setErrorMessage('');
+    setIsLoading(true)
 
     try {
       // Update username
@@ -74,6 +77,10 @@ function Settings() {
         withCredentials: true,
       });
       console.log(response2)
+
+      if( response.status === 200 && response2.status === 200){
+        toast.success('Updated details successfully')
+      }
 
       // Update profile picture
       if (profilePicture) {
@@ -97,11 +104,16 @@ function Settings() {
                 console.log(response3)
           } else{
             setErrorMessage('Failed to update settings. Please try again.');
+            toast.error(errorMessage)
           }
+
+          
 
          
 
       }
+
+      
 
       // Update password
       if (newPassword && newPassword === confirmPassword) {
@@ -113,8 +125,10 @@ function Settings() {
         });
         if(response.status === 200){
           setSuccessMessage('Settings updated successfully!');
+          toast.success(successMessage)
         } else{
           setErrorMessage('Password do not match');
+          toast.error(errorMessage)
         }
         
         
@@ -129,14 +143,18 @@ function Settings() {
     } catch (error) {
       console.error('Error updating user settings:', error);
       setErrorMessage('Failed to update settings. Please try again.');
+      toast.error(errorMessage)
+    } finally{
+      setIsLoading(false)
     }
   };
 
   return (
+    
     <div className="settings-container">
+      <ToastContainer/>
       <h1 className="settings-title">Account Settings</h1>
-      {successMessage && <p className="success-message">{successMessage}</p>}
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+     
       <form className="settings-form" onSubmit={handleSubmit}>
         <div className="form-field">
           <label htmlFor="username" className="label">Username:</label>
@@ -196,6 +214,7 @@ function Settings() {
             value={confirmPassword}
             onChange={handleConfirmPasswordChange}
           />
+           {isLoading && <i className='fa loading-spinner'></i>}
         </div>
         <button type="submit" className="submit-button">Save Changes</button>
       </form>

@@ -10,7 +10,6 @@ function PostDetails() {
 
     return (
         <div className='postDetails'>
-            <PostNotClick PostId={PostId} />
             <Comments PostId={PostId} />
         </div>
 

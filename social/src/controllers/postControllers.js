@@ -31,6 +31,37 @@ async function getFeed(req, res) {
 
 }
 
+async function getForYou(req, res) {
+    console.log(req.session?.user.UserId)
+    
+
+    const { pool } = req
+    try {
+        
+
+        if (pool.connected) {
+            const request = pool.request();
+
+            
+
+            let result = await request.execute('GetPostsForYou');
+            console.log(result)
+
+            res.json({
+                success: true,
+                message: "Retrieved posts for you",
+                data: result.recordset
+            })
+        }
+    } catch (error) {
+        res.send(error.message)
+
+    }
+
+}
+
+
+
 async function getUserPosts(req, res) {
     const UserId = req.params.id
     const { pool } = req
@@ -364,4 +395,4 @@ async function searchByUsername(req,res){
 
 
 
-module.exports = { getFeed, getUserPosts, createPost, getPost,deletePost, likePost, commentOnPost,getRepliesForComment, likeComment, checkLike ,replytoComment, searchByUsername, checkLikeComment };
+module.exports = { getFeed, getUserPosts, createPost, getPost,deletePost, likePost, commentOnPost,getRepliesForComment, likeComment, checkLike ,replytoComment, searchByUsername, checkLikeComment, getForYou };

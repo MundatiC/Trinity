@@ -7,21 +7,34 @@ import axios from "axios";
 
 function Feed({ onPostClick }) {
   const [posts, setPosts] = useState([]);
+  const [activeTab, setActiveTab] = useState("home");
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await axios.get("http://localhost:5051/feed", {
+  const fetchPosts = async () => {
+    try {
+      let response;
+      if (activeTab === "home") {
+        response = await axios.get("http://localhost:5051/feed", {
           withCredentials: true,
         });
-        setPosts(response.data.data);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
+      } else if (activeTab === "forYou") {
+        response = await axios.get("http://localhost:5051/foryou", {
+          withCredentials: true,
+        });
       }
-    };
 
+      setPosts(response.data.data);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchPosts();
-  }, []);
+  }, [activeTab]);
+
+  const refreshPosts = () =>{
+    fetchPosts();
+  }
 
   const handlePostClick = (post) => {
     onPostClick(post);
@@ -29,13 +42,29 @@ function Feed({ onPostClick }) {
 
   const MemoizedPost = React.memo(Post);
 
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+  };
+
   return (
     <div className="feed">
-      <div className="feed__header">
-        <h2>Home</h2>
-      </div>
+     
 
-      <TweetBox />
+      <TweetBox refreshPosts={refreshPosts} />
+      <div className="feed__header">
+        <div
+          className={`feed__tab ${activeTab === "home" ? "active" : ""}`}
+          onClick={() => handleTabChange("home")}
+        >
+          Home
+        </div>
+        <div
+          className={`feed__tab ${activeTab === "forYou" ? "active" : ""}`}
+          onClick={() => handleTabChange("forYou")}
+        >
+          For You
+        </div>
+      </div>
 
       <FlipMove>
         {posts.map((post) => (
