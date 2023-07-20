@@ -87,7 +87,10 @@ async function connectToDatabase() {
     });
 
     app.use((error, req, res, next) => {
-      res.status(error.status).json(error.message);
+      res.status(500).send({
+        success: false,
+        message: error.message,
+      });
     });
 
     const port = process.env.PORT;

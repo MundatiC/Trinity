@@ -3,6 +3,8 @@ import logo from './images/logo1.png';
 import '../App.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+
 
 
 export const Signup = () => {
@@ -11,69 +13,135 @@ export const Signup = () => {
   const [Password, setPassword] = useState('');
   const [c_password, setc_password] = useState('');
   const [ProfilePicture, setProfilePicture] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [signupStatus, setSignupStatus] = useState('');
 
   const navigate = useNavigate();
 
 
-  const uploadImage = (files) => {
-    const formData = new FormData();
-    formData.append("file", files[0]);
-    formData.append("upload_preset", "faozlxxi");
-    fetch("https://api.cloudinary.com/v1_1/trinity-social/image/upload", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setProfilePicture(data.secure_url);
-      });
+  const uploadImage = async (files) => {
+    const selectedFile = files[0];
+
+  // Check if the selected file is an image
+  if (!selectedFile || !selectedFile.type.startsWith('image/')) {
+    // Show an error message (optional)
+    handleError('Please select an image file (png, jpeg, jpg).');
+    return; // Stop further processing
+  }
+    try {
+      const formData = new FormData();
+      formData.append("file", files[0]);
+      formData.append("upload_preset", "faozlxxi");
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/trinity-social/image/upload",
+        formData
+      );
+          if(response.status === 200){
+            setProfilePicture(response.data.secure_url);
+          } else{
+            handleError('Image upload failed. Please try again later.');
+          }
+          
+        
+    } catch (error) {
+      handleError('Image upload failed. Please try again later.');
+    }
+   
   };
 
-  const handleSubmit = async (e) => {
+ 
+  const handleSuccess = () => {
+    toast.success('Signup successful!', {
+      position: 'top-right',
+      autoClose: 3000, // 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
+  const handleError = (errorMessage) => {
+    toast.error(errorMessage, {
+      position: 'top-right',
+      autoClose: 3000, // 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
+   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (Password !== c_password) {
-      setPasswordError('Password and confirm password do not match');
-      return;
-    }
+    setIsLoading(true);
+ 
+
     const registrationData = {
       Username,
       Email,
       Password,
       c_password,
-      ProfilePicture: ProfilePicture,
+      ...(ProfilePicture && { ProfilePicture })
     };
-    console.log(registrationData);
+    
     try {
       const response = await axios.post('http://localhost:5050/register', registrationData);
       setSignupStatus('success');
       console.log(response);
-      navigate('/');
+      if(response.status === 201){
+        handleSuccess();
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
+      }
+     // Show success toast
+      
     } catch (error) {
+      console.log(error);
       if (error.response) {
         console.error('Server Error:', error.response.data);
-        // Check if error is related to password
-        if (error.response.data.message === 'Invalid password') {
-          setPasswordError('Invalid password. Please choose a stronger password.');
+        const errorMessage = error.response.data.message;
+        if(errorMessage){
+          if (errorMessage?.includes('pattern')) {
+            handleError('Invalid password. Please choose a stronger password.');
+          } else if (errorMessage?.includes('"Email" must be a valid email') ) {
+            handleError('Invalid email format. Please enter a valid email.');
+          }
+          else if (errorMessage?.includes('c_password') ) {
+            handleError('Password and confirm password do not match');
+          }
+          else if (errorMessage?.includes('UC_Email') ) {
+            handleError('Email is already in use. Please enter a different email.');
+          }
+          else if (errorMessage?.includes('UC_Username') ) {
+            handleError('Username is already in use. Please enter a different Username.');
+          } else {
+            handleError('Signup failed. Please try again later.');
+          }
+         
+          setSignupStatus('error');
+        } else if (error.request) {
+          console.error('No response from server:', error.request);
+          handleError('No response from server. Please try again later.');
+          setSignupStatus('error');
         } else {
-          setPasswordError('Signup failed. Please try again later.');
+          console.error('Error:', error.message);
+          handleError('An error occurred. Please try again later.');
+          setSignupStatus('error');
         }
-        setSignupStatus('error');
-      } else if (error.request) {
-        console.error('No response from server:', error.request);
-        setPasswordError('No response from server. Please try again later.');
-        setSignupStatus('error');
-      } else {
-        console.error('Error:', error.message);
-        setPasswordError('An error occurred. Please try again later.');
-        setSignupStatus('error');
-      }
+        }
+      
+    }  finally {
+      setIsLoading(false); // Set isLoading back to false after the signup process is complete
     }
   };
 
   return (
     <>
+    <ToastContainer />
       <div className="login-box">
         <img src={logo} alt="not" className="logo" />
         <h2>Signup to Trinity</h2>
@@ -112,21 +180,22 @@ export const Signup = () => {
             type="file"
             id="myFile"
             name="filename"
-            
             accept="image/png, image/jpeg,image/jpg"
-            onChange={(e) => uploadImage(e.target.files)}
+            onChange={(e) =>  uploadImage(e.target.files)}
           />
 
-          {passwordError && <p className="error">{passwordError}</p>}
-          <button>Signup</button>
+         
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? <span>Loading...</span> : 'Signup'}
+          </button>
+          {isLoading && <i className='fa loading-spinner'></i>}
         </form>
 
         <p>
           Already have an account? <Link to="/"><span>Login</span></Link>
         </p>
 
-        {signupStatus === 'success' && <p className="toast success">Signup successful!</p>}
-        {signupStatus === 'error' && <p className="toast error">Signup failed. Please try again.</p>}
+        
       </div>
     </>
   );
