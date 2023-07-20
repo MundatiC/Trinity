@@ -15,14 +15,41 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+
+  .feed__header{
+    display: flex;
+    justify-content: space-evenly;
+   
+    border-radius: 5px;
+    overflow: hidden;
+  }
   
-  .feed__header {
-    position: sticky;
-    top: 0;
-    background-color: white;
-    z-index: 100;
-    border: 1px solid var(--twitter-background);
-    padding: 15px 20px;
+  .feed__header .feed__tab {
+    position: relative;
+    padding: 10px 20px;
+    color: #555;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .feed__header .feed__tab:hover {
+    background-color: #E8F5FE;
+  }
+  
+  .feed__header .feed__tab.active {
+   
+    color:  #555;
+  }
+  
+  .feed__header .feed__tab.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color:  var(--twitter-color) /* Adjust this color for the underline effect */
   }
   
   .feed__header > h2 {

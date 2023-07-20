@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Avatar, Button } from '@material-ui/core';
 import './Follow.css'
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+
 
 function Follow() {
   const navigate = useNavigate();
@@ -34,16 +36,22 @@ function Follow() {
     const response = await axios.post('http://localhost:5051/follow', data, {
         withCredentials:true,
     })
+    if(response.status === 200){
+      toast.success('Followed successfully')
+      fetchToFollowUsers();
+    }
+    
 
     console.log(response)
   };
 
   return (
     <div className='container'>
+      <ToastContainer />
       <h1>Users to Follow</h1>
       {users.map((user) => (
-        <div key={user.UserId} className="user-card" onClick={() => handleClick( user )}>
-            <div className='user-details'>
+        <div key={user.UserId} className="user-card" >
+            <div className='user-details' onClick={() => handleClick( user )}>
           <Avatar src={user.ProfilePicture} alt="" />
           <div className="user-card__info">
             <h2>{user.Username}</h2>
