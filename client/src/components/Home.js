@@ -13,6 +13,7 @@ import Logout from './Logout';
 import axios from 'axios';
 import MainProfile from './MainProfile';
 import { Outlet } from 'react-router-dom';
+import Sidebar2 from './Sidebar2';
 
 export const Home = () => {
   const [activeComponent, setActiveComponent] = useState('feed');
@@ -43,21 +44,22 @@ export const Home = () => {
 
   return (
     <div className="awesome">
-      <button className="toggle-sidebar-button" onClick={toggleSidebar}>
-        {showSidebar ? 'Hide Sidebar' : 'Show Sidebar'}
-      </button>
       {showSidebar && (
         <div className="sidebar">
           <Sidebar onComponentClick={renderComponent} />
         </div>
+       
       )}
+       
       <div className="main-section">
         <Outlet />
       </div>
       <div className="third-section">
         {isSearchSelected ? <Footer /> : <Search onSearchResultClick={handleSearchResultClick} />}
       </div>
-      
+      <div className='sidebar2'>
+        <Sidebar2 onComponentClick={renderComponent}/>
+      </div>
     </div>
   );
 };
