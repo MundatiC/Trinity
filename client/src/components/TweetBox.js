@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./TweetBox.css";
 import { Avatar, Button } from "@material-ui/core";
 import PhotoIcon from "@material-ui/icons/Photo";
@@ -12,6 +12,27 @@ function TweetBox({ refreshPosts }) {
   const [tweetMessage, setTweetMessage] = useState("");
   const [tweetImage, setTweetImage] = useState(null);
   const [tweetVideo, setTweetVideo] = useState(null);
+  const [profile, setProfile] = useState({});
+
+  
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await axios.get('http://localhost:5052/getUser', {
+          withCredentials: true,
+        });
+        const { ProfilePicture } = response.data.data[0];
+       setProfile(ProfilePicture)
+       
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+      }
+    };
+    fetchProfile();
+  })
+
+
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -99,7 +120,7 @@ function TweetBox({ refreshPosts }) {
 
       <form onSubmit={sendTweet}>
         <div className="tweetBox__input">
-          <Avatar src="https://res.cloudinary.com/trinity-social/image/upload/v1689102278/kf3bjc6u5frthpjsbscs.jpg" />
+          <Avatar src={profile} />
           <input
             onChange={(e) => setTweetMessage(e.target.value)}
             value={tweetMessage}

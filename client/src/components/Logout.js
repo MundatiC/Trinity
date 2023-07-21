@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import './Logout.css'
 
 const Logout = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const Logout = () => {
   };
   
   const handleCancel = () => {
-    navigate("/home");
+    navigate("/home/");
   };
   return (
     <>
@@ -39,8 +40,11 @@ const Logout = () => {
             Are you sure you want to log out of your account? <br />
             You will be able to log back in whenever you want.
           </p>
+          <div className="buttons">
           <button onClick={handleLogout}>Log out</button>
           <button onClick={handleCancel}>Cancel</button>
+          </div>
+         
         </div>
       </div>
     </>

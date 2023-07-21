@@ -80,4 +80,15 @@
     color: var(--twitter-color);
   }
   
+  .mark-all-read-button{
+    background-color: var(--twitter-color);
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+  }
   

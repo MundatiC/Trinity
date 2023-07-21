@@ -50,19 +50,19 @@ function Feed({ onPostClick }) {
     <div className="feed">
      
 
-      <TweetBox refreshPosts={refreshPosts} />
+      <TweetBox refreshPosts={refreshPosts}  />
       <div className="feed__header">
-        <div
-          className={`feed__tab ${activeTab === "home" ? "active" : ""}`}
-          onClick={() => handleTabChange("home")}
-        >
-          Home
-        </div>
         <div
           className={`feed__tab ${activeTab === "forYou" ? "active" : ""}`}
           onClick={() => handleTabChange("forYou")}
         >
           For You
+        </div>
+        <div
+          className={`feed__tab ${activeTab === "home" ? "active" : ""}`}
+          onClick={() => handleTabChange("home")}
+        >
+          Following
         </div>
       </div>
 

@@ -77,6 +77,118 @@
     text-decoration: none;
     color: #66ace6;
 }
+.signup-box{
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+}
+
+
+
+.signup-box{
+  background: #f7f6f6;
+  padding: 20px 120px;
+  width: 550px;
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  border-radius: 10px;
+}
+
+.signup-box h2{
+  margin-bottom: 20px;
+}
+
+.logo{
+  width: 80px; /* Adjust the width to your desired size */
+  height: auto; /* Maintain aspect ratio */
+  margin-bottom: 20px;
+}
+
+.signup-box button{
+  width: 100%;
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  border-radius: 30px;
+  background: transparent;
+  border: 1px solid #999;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.signup-box input{
+  width: 100%;
+  background: transparent;
+  border: 1px solid #191717;
+  padding: 15px 10px;
+  border-radius: 4px;
+  margin: 5px 0;
+}
+/* Hide the default file input appearance */
+input[type="file"] {
+  display: none;
+}
+
+/* Style the custom file input button */
+label.profile-picture-label {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: var(--lighter);
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  margin-top: 2%;
+}
+
+/* Change the button appearance on hover */
+label.profile-picture-label:hover {
+  background-color: var(--twitter-color);
+}
+
+/* Style the file name display */
+.file-name-display {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* Style the file input container */
+.file-input-container {
+  margin-bottom: 20px;
+}
+
+
+::placeholder{
+  font-weight:500;
+  color: #333;
+
+}
+
+.signup-box form button{
+  background-color: #000;
+  color: #fff;
+  border:0;
+  margin-bottom: 15px;
+
+}
+
+.signup-box p{
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+  margin: 40px 0 50px;
+}
+
+.signup-box p span{
+  text-decoration: none;
+  color: #66ace6;
+}
 .toast {
     font-size: 14px;
     padding: 10px;
@@ -92,6 +204,10 @@
   .error {
     background-color: #f44336;
     color: white;
+  }
+
+  .form-group {
+    text-align: left;
   }
   
   
@@ -111,6 +227,19 @@
     .login-box input {
       padding: 1em 0.8em;
     }
+
+    .signup-box {
+      width: 70%;
+      padding: 2em;
+    }
+  
+    .signup-box h2 {
+      font-size: 1.5em;
+    }
+  
+    .signup-box input {
+      padding: 1em 0.8em;
+    }
   }
   
   @media screen and (max-width: 480px) {
@@ -128,6 +257,23 @@
     }
   
     .login-box p {
+      font-size: 12px;
+    }
+
+    .signup-box {
+      width: 95%;
+      padding: 1.5em;
+    }
+  
+    .signup-box h2 {
+      font-size: 1.2em;
+    }
+  
+    .signup-box input {
+      padding: 0.8em 0.6em;
+    }
+  
+    .signup-box p {
       font-size: 12px;
     }
   }

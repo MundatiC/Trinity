@@ -142,54 +142,80 @@ export const Signup = () => {
   return (
     <>
     <ToastContainer />
-      <div className="login-box">
+      <div className="signup-box">
         <img src={logo} alt="not" className="logo" />
         <h2>Signup to Trinity</h2>
 
         <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Username"
-            required
-            value={Username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Email"
-            required
-            value={Email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            required
-            value={Password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Confirm password"
-            required
-            value={c_password}
-            onChange={(e) => setc_password(e.target.value)}
-          />
+  <div className="form-group">
+    <label htmlFor="username">Username:</label>
+    <input
+      type="text"
+      id="username"
+      placeholder="Username"
+      required
+      value={Username}
+      onChange={(e) => setUsername(e.target.value)}
+    />
+  </div>
+  <div className="form-group">
+    <label htmlFor="email">Email:</label>
+    <input
+      type="text"
+      id="email"
+      placeholder="Email"
+      required
+      value={Email}
+      onChange={(e) => setEmail(e.target.value)}
+    />
+  </div>
+  <div className="form-group">
+    <label htmlFor="password">Password:</label>
+    <input
+      type="password"
+      id="password"
+      placeholder="Password"
+      required
+      value={Password}
+      onChange={(e) => setPassword(e.target.value)}
+    />
+  </div>
+  <div className="form-group">
+    <label htmlFor="confirm-password">Confirm Password:</label>
+    <input
+      type="password"
+      id="confirm-password"
+      placeholder="Confirm password"
+      required
+      value={c_password}
+      onChange={(e) => setc_password(e.target.value)}
+    />
+  </div>
+<div className="file-input-container">
+  <label htmlFor="myFile" className="profile-picture-label">
+    Select Profile Picture (optional)
+  </label>
+  <input
+    type="file"
+    id="myFile"
+    name="filename"
+    accept="image/png, image/jpeg, image/jpg"
+    onChange={(e) => uploadImage(e.target.files)}
+  />
+  {ProfilePicture && (
+    <div className="file-name-display">
+      Selected file: {ProfilePicture.name}
+    </div>
+  )}
+</div>
 
-          <input
-            type="file"
-            id="myFile"
-            name="filename"
-            accept="image/png, image/jpeg,image/jpg"
-            onChange={(e) =>  uploadImage(e.target.files)}
-          />
 
-         
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? <span>Loading...</span> : 'Signup'}
-          </button>
-          {isLoading && <i className='fa loading-spinner'></i>}
-        </form>
+  <button type="submit" disabled={isLoading}>
+    {isLoading ? <span>Loading...</span> : 'Signup'}
+  </button>
+  {isLoading && <i className='fa loading-spinner'></i>}
+</form>
+
 
         <p>
           Already have an account? <Link to="/"><span>Login</span></Link>

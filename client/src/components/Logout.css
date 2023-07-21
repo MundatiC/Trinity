@@ -1,0 +1,60 @@
+.Home-component {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f2f5;
+  }
+  
+  .logout-component {
+    max-width: 400px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logout-component h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .logout-component p {
+    font-size: 16px;
+    color: #6b7280;
+    margin-bottom: 20px;
+  }
+  .logout-component .buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .logout-component .buttons button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .logout-component .buttons button:first-child {
+    background-color: #dc2626;
+    color: white;
+    margin-right: 10px;
+  }
+  
+  .logout-component .buttons button:last-child {
+    background-color: #f3f4f6;
+    color: #374151;
+  }
+  
+  .logout-component .buttons button:hover {
+    background-color: var(--twitter-color);
+  }
+  
+  /* Add any other styles you need to customize the appearance of the Logout component */
+  
