@@ -54,34 +54,39 @@
   
   .profile-stats {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     margin-bottom: 20px;
   }
   
   .profile-stats .followers,
   .profile-stats .following {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    align-items: baseline;
+    
   }
   
   .profile-stats .count {
-    font-size: 24px;
+    font-size: 1.06em;
+    text-transform: uppercase;
     font-weight: bold;
+    padding-right: 2%;
+    
   }
   
   .profile-stats .label {
-    font-size: 14px;
+    font-size: 1em;
     text-transform: uppercase;
     color: #888;
+    
   }
   
   .profile-tabs {
     display: flex;
     justify-content: space-evenly;
-   
-    border-radius: 5px;
     overflow: hidden;
+    border-bottom: 2px solid var(--twitter-background);
+    width: 100%;
   }
   
   .profile-tabs .tab {

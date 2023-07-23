@@ -6,7 +6,7 @@ import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { FaPlay, FaPause, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Post = forwardRef(({ post, onClick }, ref) => {
   const navigate = useNavigate();
@@ -45,6 +45,24 @@ const Post = forwardRef(({ post, onClick }, ref) => {
   useEffect(() => {
     checkLike();
   }, [post.PostId]);
+  const formatTimestamp = (timestamp) => {
+    const currentTime = new Date();
+    const createdTime = new Date(timestamp);
+    const timeDifference = Math.abs(currentTime - createdTime);
+    const minutesDifference = Math.floor(timeDifference / (1000 * 60));
+
+    if (minutesDifference < 1) {
+      return 'Just now';
+    } else if (minutesDifference < 60) {
+      return `${minutesDifference} ${minutesDifference === 1 ? 'minute' : 'minutes'} ago`;
+    } else if (minutesDifference < 1440) {
+      const hoursDifference = Math.floor(minutesDifference / 60);
+      return `${hoursDifference} ${hoursDifference === 1 ? 'hour' : 'hours'} ago`;
+    } else {
+      const daysDifference = Math.floor(minutesDifference / 1440);
+      return `${daysDifference} ${daysDifference === 1 ? 'day' : 'days'} ago`;
+    }
+  };
   
 
   const handleCommentChange = (event) => {
@@ -111,13 +129,15 @@ const Post = forwardRef(({ post, onClick }, ref) => {
           withCredentials: true,
         }
       );
-
-      setIsLiked(!isLiked);
-      if(isLiked){
-        setLikeCount(likeCount - 1) 
-      }else{
-        setLikeCount(likeCount + 1) 
-      }
+        if(response.status === 200){
+          setIsLiked(!isLiked);
+          if(isLiked){
+            setLikeCount(likeCount - 1) 
+          }else{
+            setLikeCount(likeCount + 1) 
+          }
+        }
+     
       // Toggle the like status
     } catch (error) {
       console.error("Error liking/unliking post:", error);
@@ -152,19 +172,24 @@ const Post = forwardRef(({ post, onClick }, ref) => {
       <div className="post__avatar">
         <Avatar src={post.ProfilePicture} />
       </div>
+      
       <div className="post__body">
-        <div className="post__header" onClick={()=> handlePostClick(post.PostId)}>
-          <div className="post__headerText">
+        <div className="post__header" >
+        <Link to={`/home/profiles/${post.UserId}`}  style={{ textDecoration:'none' }}>
+        <div className="post__headerText">
             <h3>
               {post.User}{" "}
               {post.User && (
                 <span className="post__headerSpecial">
                   <VerifiedUserIcon className="post__badge" /> @{post.User}
+                  <span> {formatTimestamp(post.CreatedAt)}</span>
                 </span>
               )}
             </h3>
           </div>
-          <div className="post__headerDescription">
+      </Link>
+          
+          <div className="post__headerDescription" onClick={()=> handlePostClick(post.PostId)}>
             <p>{post.Content}</p>
           </div>
         </div>

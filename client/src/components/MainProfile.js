@@ -77,7 +77,9 @@ const MainProfile = ({ onPostClick }) => {
               <span className="label">Following</span>
             </div>
           </div>
-          <div className="profile-tabs">
+          
+        </div>
+        <div className="profile-tabs">
             <div
               className={`tab ${activeTab === 'posts' ? 'active' : ''}`}
               onClick={() => handleTabChange('posts')}
@@ -91,8 +93,6 @@ const MainProfile = ({ onPostClick }) => {
               LIKES
             </div>
           </div>
-        </div>
-
         <FlipMove>
           {filteredPosts.map((post) => (
             <Post key={post.PostId} post={post} onClick={() => handlePostClick(post)} />
