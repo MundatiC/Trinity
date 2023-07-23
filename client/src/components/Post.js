@@ -6,7 +6,7 @@ import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { FaPlay, FaPause, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Post = forwardRef(({ post, onClick }, ref) => {
   const navigate = useNavigate();
@@ -154,9 +154,11 @@ const Post = forwardRef(({ post, onClick }, ref) => {
       <div className="post__avatar">
         <Avatar src={post.ProfilePicture} />
       </div>
+      
       <div className="post__body">
-        <div className="post__header" onClick={()=> handlePostClick(post.PostId)}>
-          <div className="post__headerText">
+        <div className="post__header" >
+        <Link to={`/home/profiles/${post.UserId}`}  style={{ textDecoration:'none' }}>
+        <div className="post__headerText">
             <h3>
               {post.User}{" "}
               {post.User && (
@@ -166,7 +168,9 @@ const Post = forwardRef(({ post, onClick }, ref) => {
               )}
             </h3>
           </div>
-          <div className="post__headerDescription">
+      </Link>
+          
+          <div className="post__headerDescription" onClick={()=> handlePostClick(post.PostId)}>
             <p>{post.Content}</p>
           </div>
         </div>
