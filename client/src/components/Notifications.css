@@ -1,12 +1,28 @@
+.header__noficications {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  margin-bottom: 20px;
+  position: sticky;
+  top: 0; 
+  z-index: 1; 
+  -webkit-backdrop-filter: blur(50px);
+  -o-backdrop-filter: blur(50px);
+  -moz-backdrop-filter: blur(50px);
+  backdrop-filter: blur(50px);
+
+}
+
 .notifications {
     background-color: #f5f8fa;
-    padding: 20px;
+    padding: 15px 20px 20px 20px;
     overflow-y: scroll;
+    max-height: 100vh;
   }
   .notifications::-webkit-scrollbar {
     display: none;
   }
-  
   
   .notifications__title {
     font-size: 24px;
@@ -41,6 +57,7 @@
   .notification__details {
     display: flex;
     align-items: center;
+    padding: 2%;
   }
   
   .notification__type {
@@ -48,10 +65,17 @@
     font-weight: bold;
     margin-right: 10px;
   }
+
+  .notification__icon{
+    font-size: 20px;
+    color: var(--twitter-color);
+    margin-right: 7%;
+  }
   
   .notification__profile-picture {
     width: 40px;
     height: 40px;
+    border: 2px solid var(--twitter-background);
     border-radius: 50%;
     margin-right: 10px;
   }
@@ -83,6 +107,7 @@
   .mark-all-read-button{
     background-color: var(--twitter-color);
     color: #ffffff;
+    right: 20px;
     border: none;
     border-radius: 20px;
     padding: 10px 20px;
