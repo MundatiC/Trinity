@@ -7,7 +7,7 @@ import axios from "axios";
 
 function Feed({ onPostClick }) {
   const [posts, setPosts] = useState([]);
-  const [activeTab, setActiveTab] = useState("home");
+  const [activeTab, setActiveTab] = useState("forYou"); // Set the initial state to "forYou"
 
   const fetchPosts = async () => {
     try {
@@ -32,9 +32,9 @@ function Feed({ onPostClick }) {
     fetchPosts();
   }, [activeTab]);
 
-  const refreshPosts = () =>{
+  const refreshPosts = () => {
     fetchPosts();
-  }
+  };
 
   const handlePostClick = (post) => {
     onPostClick(post);
@@ -48,9 +48,7 @@ function Feed({ onPostClick }) {
 
   return (
     <div className="feed">
-     
-
-      <TweetBox refreshPosts={refreshPosts}  />
+      <TweetBox refreshPosts={refreshPosts} />
       <div className="feed__header">
         <div
           className={`feed__tab ${activeTab === "forYou" ? "active" : ""}`}

@@ -1,13 +1,5 @@
 
-.sticky {
-  position: sticky;
-  top: 0;
-  background-color: white; /* You can change the background color as needed */
-  z-index: 999; /* Adjust the z-index to make sure the sticky post appears above other content */
-  width: 100%;
-  opacity: 0.97;
-  
-}
+
 .comment {
     display: flex;
     align-items: flex-start;

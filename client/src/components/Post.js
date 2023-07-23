@@ -111,13 +111,15 @@ const Post = forwardRef(({ post, onClick }, ref) => {
           withCredentials: true,
         }
       );
-
-      setIsLiked(!isLiked);
-      if(isLiked){
-        setLikeCount(likeCount - 1) 
-      }else{
-        setLikeCount(likeCount + 1) 
-      }
+        if(response.status === 200){
+          setIsLiked(!isLiked);
+          if(isLiked){
+            setLikeCount(likeCount - 1) 
+          }else{
+            setLikeCount(likeCount + 1) 
+          }
+        }
+     
       // Toggle the like status
     } catch (error) {
       console.error("Error liking/unliking post:", error);
