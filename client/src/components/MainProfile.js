@@ -3,8 +3,11 @@ import './Profile.css';
 import FlipMove from 'react-flip-move';
 import Post from './Post';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Avatar } from '@material-ui/core';
+import moment from 'moment';
+import EventIcon from '@material-ui/icons/Event';
+
 
 const MainProfile = ({ onPostClick }) => {
   const { UserId } = useParams();
@@ -56,26 +59,38 @@ const MainProfile = ({ onPostClick }) => {
         <div className="profile-content">
           <div className="profile-header">
             <div className="profile-avatar">
-            <Avatar src={profileData.ProfilePicture} alt={profileData.Name}
+            <Avatar src={profileData.ProfilePicture} alt={profileData.Username}
                style={{ width: '100px', height: '100px' }}  />
             </div>
             <div className="profile-info">
               <h2>{profileData.Username}</h2>
-              <p className="name">{profileData.Name}</p>
+              <p className="name">@{profileData.Username}</p>
             </div>
           </div>
           <div className="profile-bio">
             <p>{profileData.Bio}</p>
+            
           </div>
+          <div className="joined-info">
+              
+              <p className="joined-date"><EventIcon className="calendar-icon" />Joined {moment(profileData.CreatedAt).format('MMM D, YYYY')}</p>
+            </div>
           <div className="profile-stats">
+            <Link to={`/home/followers`}  style={{ textDecoration:'none' }}>
             <div className="followers">
               <span className="count">{profileData.FollowingCount}</span>
               <span className="label">Followers</span>
             </div>
+            </Link>
+
+            <Link to={`/home/followers`}  style={{ textDecoration:'none' }}>
             <div className="following">
               <span className="count">{profileData.FollowersCount}</span>
               <span className="label">Following</span>
             </div>
+            </Link>
+           
+            
           </div>
           
         </div>

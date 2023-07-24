@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Notifications.css';
 import { Avatar } from '@material-ui/core';
+import moment from 'moment';
 
 function Notifications() {
   const [notifications, setNotifications] = useState([]);
@@ -22,20 +23,22 @@ function Notifications() {
   };
 
   const formatTimestamp = (timestamp) => {
-    const currentTime = new Date();
-    const createdTime = new Date(timestamp);
-    const timeDifference = Math.abs(currentTime - createdTime);
-    const minutesDifference = Math.floor(timeDifference / (1000 * 60));
-
+    const currentTime =  moment(); // Current time in East African Time (EAT)
+    console.log(currentTime)
+    const createdTime = moment(timestamp).utcOffset(-3)._d; // Created time from the database in UTC time zone
+    console.log(createdTime)
+  
+    const minutesDifference = Math.abs(currentTime.diff(createdTime, 'minutes'));
+    const hoursDifference = Math.abs(currentTime.diff(createdTime, 'hours'));
+    const daysDifference = Math.abs(currentTime.diff(createdTime, 'days'));
+  
     if (minutesDifference < 1) {
       return 'Just now';
     } else if (minutesDifference < 60) {
       return `${minutesDifference} ${minutesDifference === 1 ? 'minute' : 'minutes'} ago`;
-    } else if (minutesDifference < 1440) {
-      const hoursDifference = Math.floor(minutesDifference / 60);
+    } else if (hoursDifference < 24) {
       return `${hoursDifference} ${hoursDifference === 1 ? 'hour' : 'hours'} ago`;
     } else {
-      const daysDifference = Math.floor(minutesDifference / 1440);
       return `${daysDifference} ${daysDifference === 1 ? 'day' : 'days'} ago`;
     }
   };
