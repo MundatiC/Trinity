@@ -1,6 +1,7 @@
 import './App.css';
 import Feed from './components/Feed';
 import Follow from './components/Follow';
+import Followers from './components/Followers';
 import  Home  from './components/Home'
 import  Login  from './components/Login'
 import Logout from './components/Logout';
@@ -34,6 +35,7 @@ const myRouter = createBrowserRouter(
         <Route path='/home/logout' element={<Logout/>}/>
         <Route path='/home/profiles/:UserId' element={<Profile/>}/>
         <Route path='/home/post/:PostId' element={<PostDetails/>}/>
+        <Route path='/home/followers' element={<Followers/>}/>
       </Route>
     <Route path="/signup" element={<Signup />} />
     <Route path="/" element={<Login />} />

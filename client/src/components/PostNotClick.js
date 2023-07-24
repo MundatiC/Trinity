@@ -7,6 +7,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import { FaPlay, FaPause, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import moment from 'moment';
 
 
 function PostNotClick  ( { PostId, refreshComments }) {
@@ -82,24 +83,32 @@ function PostNotClick  ( { PostId, refreshComments }) {
     setComment(event.target.value);
   };
 
-  const formatTimestamp = (timestamp) => {
-    const currentTime = new Date();
-    const createdTime = new Date(timestamp);
-    const timeDifference = Math.abs(currentTime - createdTime);
-    const minutesDifference = Math.floor(timeDifference / (1000 * 60));
+  
 
-    if (minutesDifference < 1) {
-      return 'Just now';
-    } else if (minutesDifference < 60) {
-      return `${minutesDifference} ${minutesDifference === 1 ? 'minute' : 'minutes'} ago`;
-    } else if (minutesDifference < 1440) {
-      const hoursDifference = Math.floor(minutesDifference / 60);
-      return `${hoursDifference} ${hoursDifference === 1 ? 'hour' : 'hours'} ago`;
-    } else {
-      const daysDifference = Math.floor(minutesDifference / 1440);
-      return `${daysDifference} ${daysDifference === 1 ? 'day' : 'days'} ago`;
-    }
-  };
+const formatTimestamp = (timestamp) => {
+  const currentTime =  moment(); // Current time in East African Time (EAT)
+  console.log(currentTime)
+  const createdTime = moment(timestamp).utcOffset(-3)._d; // Created time from the database in UTC time zone
+  console.log(createdTime)
+
+  const minutesDifference = Math.abs(currentTime.diff(createdTime, 'minutes'));
+  const hoursDifference = Math.abs(currentTime.diff(createdTime, 'hours'));
+  const daysDifference = Math.abs(currentTime.diff(createdTime, 'days'));
+
+  if (minutesDifference < 1) {
+    return 'Just now';
+  } else if (minutesDifference < 60) {
+    return `${minutesDifference} ${minutesDifference === 1 ? 'minute' : 'minutes'} ago`;
+  } else if (hoursDifference < 24) {
+    return `${hoursDifference} ${hoursDifference === 1 ? 'hour' : 'hours'} ago`;
+  } else {
+    return `${daysDifference} ${daysDifference === 1 ? 'day' : 'days'} ago`;
+  }
+};
+
+  
+  
+  
 
   const handleCommentSubmit = async (event) => {
     event.preventDefault();

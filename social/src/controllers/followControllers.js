@@ -150,4 +150,33 @@ async function getUsersNotFollowed (req, res){
 
 }
 
-module.exports = {getFollowing, getFollowers, followUser, unfollowUser, getUsersNotFollowed};
+//check if user is following another user
+async function checkFollow(req, res) {
+    const UserId = req.session?.user.UserId
+    const { FollowerUserId } = req.params
+    const {pool} = req
+    try {
+    
+
+        if(pool.connected){
+           const request = pool.request();
+           
+           request.input('UserId', UserId)
+                  .input('FollowerUserId', FollowerUserId)
+
+           let result = await request.execute('CheckUserFollowStatus');
+           console.log(result)
+
+           res.json({
+               success: true,
+               data: result.recordset
+           })
+        }
+   } catch (error) {
+       res.send(error.message)
+       
+   }
+
+}
+
+module.exports = {getFollowing, getFollowers, followUser, unfollowUser, getUsersNotFollowed, checkFollow};
