@@ -27,7 +27,7 @@ postRouter.post("/likeComment", likeComment)
 
 postRouter.post("/replytoComment", replytoComment)
 
-postRouter.put("/deletePost", deletePost)
+postRouter.delete("/deletePost/:PostId", deletePost)
 
 postRouter.get("/search/:term", searchByUsername)
 

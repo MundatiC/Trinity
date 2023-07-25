@@ -1,67 +1,67 @@
 .back-icon {
   cursor: pointer;
-  padding: 10px;
+  padding: 0.625em; /* 10px */
   background-color: #f2f2f2;
   border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.125em 0.25em rgba(0, 0, 0, 0.1); /* 0 2px 4px */
 }
 
 .back-icon:hover {
   background-color: #e0e0e0;
 }
+
 .post {
   display: flex;
   align-items: flex-start;
-  border-bottom: 2px solid var(--twitter-background);
-  padding-bottom: 10px;
-  padding-right: 10px;
+  border-bottom: 0.125em solid var(--twitter-background); /* 2px */
+  padding-bottom: 0.625em; /* 10px */
+  padding-right: 0.625em; /* 10px */
   box-sizing: border-box;
   width: 100%;
 }
-.post:active, .post:hover{
-  background-color:  var(--twitter-background-lighter)
+
+.post:active,
+.post:hover {
+  background-color: var(--twitter-background-lighter);
 }
 
 .post__body {
   flex: 1;
-  /* padding: 10px; */
+  padding: 1em;
 }
 
 .image {
   display: flex;
   flex-direction: row;
   overflow-x: scroll;
-  gap: 5px;
+  gap: 0.3125em; /* 5px */
   width: 100%;
- justify-content: center;
+  justify-content: center;
 }
-
 
 .image::-webkit-scrollbar {
   display: none;
 }
 
 .post__body img {
-  border-radius: 20px;
+  border-radius: 1.25em; /* 20px */
   width: 100%;
-  /* height: 30em; */
 }
 
 .video {
   position: relative;
   width: 100%;
   justify-content: center;
-
-  
 }
 
 .video-wrapper {
   position: relative;
   width: 100%;
-  border-radius: 20px;
+  border-radius: 1.25em; /* 20px */
 }
+
 video {
-  border-radius: 20px;
+  border-radius: 1.25em; /* 20px */
   width: 100%;
 }
 
@@ -82,90 +82,139 @@ video {
 
 .play-pause-icon {
   color: white;
-  font-size: 48px;
+  font-size: 3em; /* 48px */
   cursor: pointer;
 }
 
 .mute-button {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 0.625em; /* 10px */
+  right: 0.625em; /* 10px */
 }
 
 .volume-icon {
   color: white;
-  font-size: 24px;
+  font-size: 1.5em; /* 24px */
   cursor: pointer;
 }
 
 .post__footer {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
-}
- .chat, .like {
- display: flex;
- flex-direction: row;
- gap: 0.3em;
- }
- .post__footer .like.liked {
-  color: var(--twitter-color); 
+  margin-top: 1.25em; /* 20px */
 }
 
+.chat,
+.like {
+  display: flex;
+  flex-direction: row;
+  gap: 0.1875em; /* 3px */
+}
 
-
+.post__footer .like.liked {
+  color: var(--twitter-color);
+}
 
 .post__headerDescription {
-  margin-bottom: 10px;
-  font-size: 15px;
+  margin-bottom: 0.625em; /* 10px */
+  font-size: 0.9375em; /* 15px */
 }
 
-.post__headerText > h3 {
-  font-size: 15px;
-  margin-bottom: 5px;
+.post__headerText{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
+
+.post__headerText2{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.post__headerText2 > h3 {
+  font-size: 0.9375em; /* 15px */
+  margin-bottom: 0.3125em; /* 5px */
+  
+}
+
+.post__delete {
+  cursor: pointer;
+  position: relative;
+  margin-left: auto;
+}
+
+.post__delete span {
+  font-size: 1.5em;
+}
+
+.post__delete-dropdown span{
+  font-size: 1.2em;
+}
+
+.post__delete-dropdown {
+  position: absolute;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 1;
+}
+
+.post__delete-dropdown span {
+  cursor: pointer;
+}
+
+.post__delete-dropdown span:hover {
+  color: red;
+}
+
 
 .post__badge {
-  font-size: 14px !important;
+  font-size: 0.875em !important; /* 14px */
   color: var(--twitter-color);
 }
 
 .post__headerSpecial {
   font-weight: 600;
-  font-size: 12px;
+  font-size: 0.75em; /* 12px */
   color: gray;
 }
 
 .post__avatar {
-  padding: 20px;
+  padding-right: 0.5em; /* 20px */
 }
 
 .comment {
   display: flex;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 0.625em; /* 10px */
 }
 
 .comment form {
   flex: 1;
-  margin-left: 10px;
+  margin-left: 0.625em; /* 10px */
 }
 
 .comment input {
   width: 100%;
-  padding: 8px;
+  padding: 0.5em; /* 8px */
   border: none;
-  border-radius: 20px;
+  border-radius: 1.25em; /* 20px */
   outline: none;
 }
 
 .comment button {
-  margin-left: 10px;
-  padding: 6px 12px;
+  margin-left: 0.625em; /* 10px */
+  padding: 0.375em 0.75em; /* 6px 12px */
   background-color: var(--lighter);
   color: white;
   border: none;
-  border-radius: 20px;
+  border-radius: 1.25em; /* 20px */
   cursor: pointer;
 }
 
@@ -179,9 +228,9 @@ video {
 }
 
 .comment img {
-  width: 30px;
-  height: 30px;
+  width: 1.875em; /* 30px */
+  height: 1.875em; /* 30px */
   border-radius: 50%;
   object-fit: cover;
-  margin-right: 10px;
+  margin-right: 0.625em; /* 10px */
 }

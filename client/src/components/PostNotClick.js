@@ -8,6 +8,7 @@ import { FaPlay, FaPause, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import moment from 'moment';
+import { Link } from "react-router-dom";
 
 
 function PostNotClick  ( { PostId, refreshComments }) {
@@ -218,22 +219,30 @@ const formatTimestamp = (timestamp) => {
        <div className="back-icon" onClick={handleGoBack}>
         <i className="fa fa-arrow-left"></i>
       </div>
-      <div className="post__avatar">
-        <Avatar src={post.ProfilePicture} />
-      </div>
-      <div className="post__body">
+       <div className="post__body">
+      
         <div className="post__header" >
-          <div className="post__headerText">
-            <h3>
-              {post.User}{" "}
-              {post.User && (
-                <span className="post__headerSpecial">
-                  <VerifiedUserIcon className="post__badge" /> @{post.User}
-                  <span> {formatTimestamp(post.CreatedAt)}</span>
-                </span>
-              )}
-            </h3>
+       
+        <div className="post__headerText">
+        <Link to={`/home/profiles/${post.UserId}`} style={{ textDecoration: 'none' }}>
+              <div className="post__headerText2">
+              <div className="post__avatar">
+                <Avatar src={post.ProfilePicture} />
+              </div>
+              <h3>
+                {post.User}{" "}
+                {post.User && (
+                  <span className="post__headerSpecial">
+                    <VerifiedUserIcon className="post__badge" /> @{post.User} {" · "}
+                    <span> {formatTimestamp(post.CreatedAt)}</span>
+                  </span>
+                )}
+              </h3>
+              </div>
+              </Link>
           </div>
+      
+          
           <div className="post__headerDescription">
             <p>{post.Content}</p>
           </div>
@@ -256,7 +265,7 @@ const formatTimestamp = (timestamp) => {
                 onMouseEnter={handleVideoHover}
                 onMouseLeave={handleVideoHover}
               >
-                <video src={url} ref={videoRef} muted={isMuted} />
+                <video src={url} ref={videoRef} muted={isMuted}  />
                 {isHovered && (
                   <>
                    <div className="video-overlay">

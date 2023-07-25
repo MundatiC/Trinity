@@ -131,7 +131,7 @@
   margin: 5px 0;
 }
 /* Hide the default file input appearance */
-input[type="file"] {
+.signup-box input[type="file"] {
   display: none;
 }
 

@@ -83,7 +83,7 @@ const Profile = ({ onPostClick }) => {
             </div>
           </div>
         </div>
-        <div className="profile-tabs">
+          <div className="profile-tabs">
             <div
               className={`tab ${activeTab === 'posts' ? 'active' : ''}`}
               onClick={() => handleTabChange('posts')}

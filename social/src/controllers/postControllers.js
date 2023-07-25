@@ -151,7 +151,7 @@ async function getPost(req, res) {
 
 async function deletePost(req,res){
     const UserId = req.session?.user.UserId
-    const{ PostId }   = req.body;
+    const{ PostId }   = req.params;
     
     const { pool } = req
     try {

@@ -27,3 +27,8 @@
   margin-top: 20px !important;
 }
 
+@media (max-width: 600px) {
+  .test{
+    display: none;
+  }
+}
