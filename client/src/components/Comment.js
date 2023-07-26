@@ -5,6 +5,9 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import ReplyIcon from '@material-ui/icons/Reply';
 import './Comments.css';
+import moment from 'moment';
+import { Link } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
 function Comment({ comment }) {
   const [showReplyInput, setShowReplyInput] = useState(false);
@@ -72,6 +75,27 @@ function Comment({ comment }) {
     setReplyCommentId(commentId);
   };
 
+  const formatTimestamp = (timestamp) => {
+    const currentTime =  moment(); // Current time in East African Time (EAT)
+    console.log(currentTime)
+    const createdTime = moment(timestamp).utcOffset(-3)._d; // Created time from the database in UTC time zone
+    console.log(createdTime)
+  
+    const minutesDifference = Math.abs(currentTime.diff(createdTime, 'minutes'));
+    const hoursDifference = Math.abs(currentTime.diff(createdTime, 'hours'));
+    const daysDifference = Math.abs(currentTime.diff(createdTime, 'days'));
+  
+    if (minutesDifference < 1) {
+      return 'Just now';
+    } else if (minutesDifference < 60) {
+      return `${minutesDifference} ${minutesDifference === 1 ? 'minute' : 'minutes'} ago`;
+    } else if (hoursDifference < 24) {
+      return `${hoursDifference} ${hoursDifference === 1 ? 'hour' : 'hours'} ago`;
+    } else {
+      return `${daysDifference} ${daysDifference === 1 ? 'day' : 'days'} ago`;
+    }
+  };
+
   const handleReplySubmit = async (event) => {
     event.preventDefault();
 
@@ -86,6 +110,7 @@ function Comment({ comment }) {
       });
 
       // Reset the reply form
+      toast.success('Replied successfully');
       setShowReplyInput(false);
       setReplyCommentId(null);
       setReplyContent('');
@@ -97,19 +122,26 @@ function Comment({ comment }) {
 
   return (
     <div className="comment">
-      <div className="comment__avatar">
-        <Avatar src={comment.ProfilePicture} />
+      <ToastContainer />
+      <div >
+      <Link to={`/home/profiles/${comment.UserId}`} style={{ textDecoration: 'none' }}>
+        <Avatar className="comment__avatar" src={comment.ProfilePicture} />
+        </Link>
       </div>
+      
       <div className="comment__body">
         <div className="comment__header">
           <div className="comment__headerText">
             <h3>
+            <Link to={`/home/profiles/${comment.UserId}`} style={{ textDecoration: 'none' }}>
               {comment.Username}{' '}
               {comment.Username && (
                 <span className="comment__headerSpecial">
-                  <VerifiedUserIcon className="comment__badge" /> @{comment.Username}
+                  <VerifiedUserIcon className="comment__badge" /> @{comment.Username} {" · "}
+                  <span>{formatTimestamp(comment.CreatedAt)}</span>
                 </span>
               )}
+              </Link>
             </h3>
           </div>
           <div className="comment__headerDescription">
@@ -152,19 +184,24 @@ function Comment({ comment }) {
         {showReplies &&
           replies.map((reply) => (
             <div key={reply.ReplyId} className="comment reply-comment">
-              <div className="comment__avatar">
-                <Avatar src={reply.ProfilePicture} />
+              <div >
+              <Link to={`/home/profiles/${reply.UserId}`} style={{ textDecoration: 'none' }}>
+                <Avatar  className="comment__avatar" src={reply.ProfilePicture} />
+                </Link>
               </div>
               <div className="comment__body">
                 <div className="comment__header">
                   <div className="comment__headerText">
                     <h3>
+                    <Link to={`/home/profiles/${reply.UserId}`} style={{ textDecoration: 'none' }}>
                       {reply.User}{' '}
                       {reply.User && (
                         <span className="comment__headerSpecial">
-                          <VerifiedUserIcon className="comment__badge" /> @{reply.User}
+                          <VerifiedUserIcon className="comment__badge" /> @{reply.User} {" · "}
+                          <span>{formatTimestamp(reply.CreatedAt)}</span>
                         </span>
                       )}
+                      </Link>
                     </h3>
                   </div>
                   <div className="comment__headerDescription">

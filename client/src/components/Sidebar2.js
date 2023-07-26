@@ -64,6 +64,7 @@ function Sidebar2({ onComponentClick }) {
       </Link>
       <Link to={`/home/profile/${realUserId}`}  style={{ textDecoration:'none' }}>
       <SidebarOption
+        className="test"
         isActive={activeComponent === "mainprofile"}
         Icon={PermIdentityIcon}
         onClick={() => handleComponentClick("mainprofile")}

@@ -1,18 +1,18 @@
 
 
 .comment {
-    display: flex;
-    align-items: flex-start;
-    border-bottom: 1px solid var(--twitter-background);
-    padding-bottom: 10px;
-    box-sizing: border-box;
-    width: 100%;
+  display: flex;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--twitter-background);
+  padding-bottom: 1em;
+  box-sizing: border-box;
+  width: 100%;
   }
  
   
   .comment__body {
     flex: 1;
-    padding: 10px;
+    padding: 1em;
   }
   
 
@@ -20,7 +20,7 @@
   .comment__footer {
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
+    margin-top: 1.25em;
   }
   .reply, .like {
     display: flex;
@@ -55,6 +55,12 @@
   
   .comment__avatar {
     padding: 20px;
+  }
+
+  .comment__avatar > img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
   }
   
  

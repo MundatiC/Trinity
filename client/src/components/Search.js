@@ -12,7 +12,11 @@ function Search({onSearchResultClick}) {
 
   const handleSearchChange = async (event) => {
     const searchTerm = event.target.value;
+    
     setSearchTerm(searchTerm);
+    if(searchTerm === '') {
+      setSearchResults([]);
+    }
 
     try {
       const response = await axios.get(`http://localhost:5051/search/${searchTerm}`, {

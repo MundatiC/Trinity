@@ -70,6 +70,7 @@ function Feed({ onPostClick }) {
             key={post.PostId}
             post={post}
             onClick={() => handlePostClick(post)}
+            refreshPosts={refreshPosts}
           />
         ))}
       </FlipMove>
