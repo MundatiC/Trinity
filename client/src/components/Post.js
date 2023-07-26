@@ -8,9 +8,9 @@ import { FaPlay, FaPause, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import moment from 'moment';
-import { toast, ToastContainer} from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 
-const Post = forwardRef(({ post,refreshPosts }, ref) => {
+const Post = forwardRef(({ post, refreshPosts }, ref) => {
   const navigate = useNavigate();
   const handlePostClick = () => {
     navigate(`/home/post/${post.PostId}`
@@ -27,7 +27,7 @@ const Post = forwardRef(({ post,refreshPosts }, ref) => {
   const [commentCount, setCommentCount] = useState(post.CommentCount);
   const [showDeleteDropdown, setShowDeleteDropdown] = useState(false);
   const [showDelete, setShowDelete] = useState(false)
-  
+
 
 
   const imageUrls = post.ImageUrls?.split(",") || [];
@@ -42,7 +42,7 @@ const Post = forwardRef(({ post,refreshPosts }, ref) => {
         const { UserId } = response.data.data[0];
         console.log(UserId);
         post.UserId === UserId ? setShowDelete(true) : setShowDelete(false)
-       
+
       } catch (error) {
         console.error('Error fetching profile data:', error);
       }
@@ -223,37 +223,37 @@ const Post = forwardRef(({ post,refreshPosts }, ref) => {
       <div className="post__body">
 
         <div className="post__header" >
-         
-            <div className="post__headerText">
+
+          <div className="post__headerText">
             <Link to={`/home/profiles/${post.UserId}`} style={{ textDecoration: 'none' }}>
               <div className="post__headerText2">
-              <div className="post__avatar">
-                <Avatar src={post.ProfilePicture} />
+                <div className="post__avatar">
+                  <Avatar src={post.ProfilePicture} />
+                </div>
+                <h3>
+                  {post.User}{" "}
+                  {post.User && (
+                    <span className="post__headerSpecial">
+                      <VerifiedUserIcon className="post__badge" /> @{post.User} {" · "}
+                      <span> {formatTimestamp(post.CreatedAt)}</span>
+                    </span>
+                  )}
+                </h3>
               </div>
-              <h3>
-                {post.User}{" "}
-                {post.User && (
-                  <span className="post__headerSpecial">
-                    <VerifiedUserIcon className="post__badge" /> @{post.User} {" · "}
-                    <span> {formatTimestamp(post.CreatedAt)}</span>
-                  </span>
-                )}
-              </h3>
-              </div>
-              </Link>
-             
-             {showDelete && (<div className="post__delete" onClick={ () => toggleDeleteDropdown()}>
-            <span>...</span>
-            {showDeleteDropdown && (
-              <div className="post__delete-dropdown">
-                <span onClick={ () => handlePostDelete(post.PostId)}>Delete</span>
-              </div>
-            )}
-          </div>)}
-            </div>
-          
+            </Link>
 
-         
+            {showDelete && (<div className="post__delete" onClick={() => toggleDeleteDropdown()}>
+              <span>...</span>
+              {showDeleteDropdown && (
+                <div className="post__delete-dropdown">
+                  <span onClick={() => handlePostDelete(post.PostId)}>Delete</span>
+                </div>
+              )}
+            </div>)}
+          </div>
+
+
+
 
           <div className="post__headerDescription" onClick={() => handlePostClick()}>
             <p>{post.Content}</p>
@@ -333,7 +333,11 @@ const Post = forwardRef(({ post,refreshPosts }, ref) => {
 
         {showCommentInput && (
           <div className="comment">
-            <Avatar src={post.ProfilePicture} />
+            
+            <div className="comment__avatar">
+                  <Avatar src={post.ProfilePicture} />
+                </div>
+           
             <form onSubmit={handleCommentSubmit}>
               <input
                 type="text"
@@ -342,7 +346,7 @@ const Post = forwardRef(({ post,refreshPosts }, ref) => {
                 required
                 onChange={handleCommentChange}
               />
-              <button type="submit">Post</button>
+              <button type="submit">Comment</button>
             </form>
           </div>
         )}

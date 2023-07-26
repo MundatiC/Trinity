@@ -330,7 +330,7 @@ const formatTimestamp = (timestamp) => {
                 required
                 onChange={handleCommentChange}
               />
-              <button type="submit">Post</button>
+              <button className="purple" type="submit">Comment</button>
             </form>
           </div>
         )}

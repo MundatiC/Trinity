@@ -200,6 +200,7 @@ video {
   margin-left: 0.625em; /* 10px */
 }
 
+
 .comment input {
   width: 100%;
   padding: 0.5em; /* 8px */
@@ -209,7 +210,8 @@ video {
 }
 
 .comment button {
-  margin-left: 0.625em; /* 10px */
+  margin-left: 0.625em;
+  margin-top: 0.5em; /* 10px */
   padding: 0.375em 0.75em; /* 6px 12px */
   background-color: var(--lighter);
   color: white;
@@ -227,10 +229,4 @@ video {
   outline: none;
 }
 
-.comment img {
-  width: 1.875em; /* 30px */
-  height: 1.875em; /* 30px */
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 0.625em; /* 10px */
-}
+

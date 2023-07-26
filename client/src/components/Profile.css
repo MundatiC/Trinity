@@ -37,9 +37,9 @@
   .profile-info h2 {
     font-size: 24px;
     font-weight: bold;
-    margin: 0;
-  }
+    margin: 5px;
   
+  }
   .profile-info .name {
     font-size: 18px;
     color: #888;

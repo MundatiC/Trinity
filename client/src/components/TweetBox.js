@@ -7,12 +7,15 @@ import CloseIcon from "@material-ui/icons/Close"; // For deselecting the file
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 
 function TweetBox({ refreshPosts }) {
   const [tweetMessage, setTweetMessage] = useState("");
   const [tweetImage, setTweetImage] = useState(null);
   const [tweetVideo, setTweetVideo] = useState(null);
   const [profile, setProfile] = useState({});
+  const [UserId, setUserId] = useState()
+  const [isLoading, setIsLoading] = useState(false);
 
   
 
@@ -22,8 +25,9 @@ function TweetBox({ refreshPosts }) {
         const response = await axios.get('http://localhost:5052/getUser', {
           withCredentials: true,
         });
-        const { ProfilePicture } = response.data.data[0];
+        const { ProfilePicture, UserId } = response.data.data[0];
        setProfile(ProfilePicture)
+       setUserId(UserId)
        
       } catch (error) {
         console.error('Error fetching profile data:', error);
@@ -54,6 +58,7 @@ function TweetBox({ refreshPosts }) {
 
   const sendTweet = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     // Handle image and video upload logic here
     let imageUploadUrl = null;
@@ -105,6 +110,8 @@ function TweetBox({ refreshPosts }) {
     } catch (error) {
       console.error("Error creating post:", error);
       toast.error("Failed to create post. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
 
     // Reset state
@@ -120,7 +127,9 @@ function TweetBox({ refreshPosts }) {
 
       <form onSubmit={sendTweet}>
         <div className="tweetBox__input">
+        <Link to={`/home/profile/${UserId}`} style={{ textDecoration:'none' }}>
           <Avatar src={profile} />
+          </Link>
           <input
             onChange={(e) => setTweetMessage(e.target.value)}
             value={tweetMessage}
@@ -173,15 +182,17 @@ function TweetBox({ refreshPosts }) {
               <span>Add Video</span>
             </label>
           )}
-        </div>
-
-        <Button
+          <Button
           type="submit"
           className="tweetBox__tweetButton"
           disabled={tweetMessage.length === 0}
         >
           Post
         </Button>
+       
+        </div>
+        {isLoading && ( <i className="fa loading-spinner"></i>)}
+        
       </form>
     </div>
   );
